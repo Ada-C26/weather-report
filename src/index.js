@@ -14,7 +14,13 @@ const headerCityName = document.getElementById("headerCityName");//Wave3
 //Temp landscape change
 
 
-//Features update
+//Temp display
+
+
+//Temp buttons, increase and decrease
+
+
+//Update city name
 const updateCityName = () => {
     headerCityName.textContent = cityNameInput.value;//Wave3
 };
