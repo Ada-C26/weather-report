@@ -1,0 +1,149 @@
+body {
+  margin: 0;
+  padding: clamp(20px, 3vw, 48px);
+  background-color: #1C68F9;
+  font-family: "Rubik", sans-serif;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  grid-template-areas:
+    "title       title"
+    "temperature garden"
+    "weather     garden"
+    "city        garden";
+  gap: 20px 40px;
+}
+
+.tittle_section {
+  grid-area: title;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 12px 24px;
+  padding-block: 48px 60px;
+  color: #FFFFFF;
+}
+
+.tittle_section h1 {
+  margin: 0;
+  font-size: clamp(36px, 5vw, 64px);
+}
+
+.tittle_section h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: normal;
+}
+
+.temperature_section {
+  grid-area: temperature;
+}
+
+.weather_section {
+  grid-area: weather;
+}
+
+.city_section {
+  grid-area: city;
+}
+
+.temperature_section,
+.weather_section,
+.city_section {
+  padding: 24px;
+  background-color: #FFFFFF;
+  border-radius: 12px;
+}
+
+.temperature_section h2,
+.weather_section h2,
+.city_section h2 {
+  margin-top: 0;
+}
+
+.temperature_section,
+.city_section {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.temperature_section h2,
+.city_section h2 {
+  flex-basis: 100%;
+  margin-bottom: 0;
+}
+
+.temperature_section > div:first-of-type {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+[id="temperature value"] {
+  color: #FFD602;
+  font-size: 48px;
+}
+
+#temperature_button,
+#reset_button {
+  padding: 12px 16px;
+  border: 0;
+  border-radius: 10px;
+  color: #FFFFFF;
+  font: inherit;
+  cursor: pointer;
+}
+
+#temperature_button {
+  background-color: #1C68F9;
+}
+
+#reset_button {
+  background-color: #1655CC;
+}
+
+.garden_section {
+  grid-area: garden;
+  align-self: center;
+  justify-self: center;
+  width: 100%;
+  max-width: 680px;
+  color: #FFFFFF;
+  text-align: center;
+}
+
+#sky {
+  box-sizing: border-box;
+  min-height: 250px;
+  padding: 20px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background-color: #D3D3D3;
+  border-radius: 12px;
+}
+
+#emojis {
+  margin: 0;
+  color: #000000;
+  font-size: clamp(18px, 2.5vw, 32px);
+}
+
+@media (max-width: 700px) {
+  body {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "title"
+      "temperature"
+      "weather"
+      "city"
+      "garden";
+  }
+
+  .tittle_section {
+    padding-block: 20px;
+  }
+}
