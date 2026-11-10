@@ -65,14 +65,14 @@ temperatureButton.addEventListener("click", () => {
         }
     })
     .then((response) => {
-        console.log("Location response:", response.data);
+        const locations = response.data;
 
-        if (!Array.isArray(response.data) || response.data.length === 0) {
-            throw new Error("City not found");
+        if (!Array.isArray(locations) || locations.length === 0) {
+            throw new Error("City not found.");
         }
 
-        const latitude = response.data[0].lat;
-        const longitude = response.data[0].lon;
+        const latitude = locations[0].lat;
+        const longitude = locations[0].lon;
 
         return axios.get(`${proxyURL}/weather`, {
             params: {
@@ -82,15 +82,19 @@ temperatureButton.addEventListener("click", () => {
         });
     })
     .then((response) => {
-        console.log("Weather response:", response.data);
+        const weatherData = response.data;
 
-        const kelvin = response.data.main.temp;
+        if (!weatherData.main || typeof weatherData.main.temp !== "number") {
+            throw new Error(
+                weatherData.message || "Invalid weather data."
+            );
+        }
+
+        const kelvin = weatherData.main.temp;
 
         temperature = Math.round(
             (kelvin - 273.15) * 9 / 5 + 32
         );
-
-        temperatureValue.textContent = temperature;
 
         updateTemperatureColor();
         updateLandscape();
