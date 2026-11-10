@@ -3,10 +3,12 @@ const increaseControl = document.getElementById("increase_control")
 const temperatureValue = document.getElementById("temperature_value")
 const decreaseControl = document.getElementById("decrease_control")
 const landscape = document.getElementById("emojis");
+const temperatureButton = document.getElementById("temperature_button");
+const cityInput = document.getElementById("city");
+const proxyURL = "http://127.0.0.1:5000";
 
 function updateTemperatureColor() {
     temperatureValue.textContent = temperature;
-
     if (temperature >= 80) {
         temperatureValue.style.color = "red";
     } else if (temperature >= 70) {
@@ -49,3 +51,52 @@ decreaseControl.addEventListener("click",() => {
 updateTemperatureColor();
 updateLandscape();
 
+temperatureButton.addEventListener("click", () => {
+    const cityName = cityInput.value.trim();
+
+    if (cityName === "") {
+        alert("Please enter a city name.");
+        return;
+    }
+
+    axios.get(`${proxyURL}/location`, {
+        params: {
+            q: cityName
+        }
+    })
+    .then((response) => {
+        console.log("Location response:", response.data);
+
+        if (!Array.isArray(response.data) || response.data.length === 0) {
+            throw new Error("City not found");
+        }
+
+        const latitude = response.data[0].lat;
+        const longitude = response.data[0].lon;
+
+        return axios.get(`${proxyURL}/weather`, {
+            params: {
+                lat: latitude,
+                lon: longitude
+            }
+        });
+    })
+    .then((response) => {
+        console.log("Weather response:", response.data);
+
+        const kelvin = response.data.main.temp;
+
+        temperature = Math.round(
+            (kelvin - 273.15) * 9 / 5 + 32
+        );
+
+        temperatureValue.textContent = temperature;
+
+        updateTemperatureColor();
+        updateLandscape();
+    })
+    .catch((error) => {
+        console.error("Could not fetch weather data:", error);
+        alert("Could not get weather data.");
+    });
+});
