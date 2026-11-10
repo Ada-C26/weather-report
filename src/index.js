@@ -2,11 +2,12 @@
 
 const increaseTempControl = document.getElementById('increaseTempControl');
 const decreaseTempControl = document.getElementById('decreaseTempControl');
+const currentTempButton = document.getElementById('currentTempButton');
+const cityNameInput = document.getElementById('cityNameInput');
 const tempValue = document.getElementById('tempValue');
 const landscape = document.getElementById('landscape');
 
-let temperature = 50;
-const city = 'San Francisco';
+let temperature = 0;
 
 
 // Update temperature display color and landscapes
@@ -15,23 +16,23 @@ const updateTempGraphics = (temperature) => {
     if (temperature >= 90) {
         tempValue.style.color = 'red';
         changeLandscape('desert.jpg');
-    } else if (temperature >= 80) {
+    } else if (temperature < 90 && temperature >= 80) {
         tempValue.style.color = 'pink';
         changeLandscape('beach.jpg');
-    } else if (temperature >= 70) {
-        tempValue.style.color = 'orange';
+    } else if (temperature < 80 && temperature >= 70) {
+        tempValue.style.color = 'orange'
         changeLandscape('meadow.jpg');
-    } else if (temperature >= 60) {
-        tempValue.style.color = 'yellow';
+    } else if (temperature < 70 && temperature >= 60) {
+        tempValue.style.color = 'yellow'
         changeLandscape('springs.jpg');
-    } else if (temperature >= 50) {
-        tempValue.style.color = 'green';
+    } else if (temperature < 60 && temperature >= 50) {
+        tempValue.style.color = 'green'
         changeLandscape('forest.jpg');
-    } else if (temperature >= 40) {
-        tempValue.style.color = 'teal';
+    } else if (temperature < 50 && temperature >= 40) {
+        tempValue.style.color = 'teal'
         changeLandscape('mist.jpg');
     } else {
-        tempValue.style.color = 'blue';
+        tempValue.style.color = 'blue'
         changeLandscape('snow.jpg');
     }
 };
@@ -137,7 +138,13 @@ const changeTempWithCity = (city) => {
 const registerEventHandlers = () => {
     decreaseTempControl.addEventListener('click', decreaseTemperature);
     increaseTempControl.addEventListener('click', increaseTemperature);
+
+    currentTempButton.addEventListener('click', () => {
+        const city = cityNameInput.value.trim();
+        changeTempWithCity(city);
+    });
 };
+
 
 // Application initialization
 
@@ -148,6 +155,4 @@ document.addEventListener('DOMContentLoaded', () => {
     // Register event handlers
     registerEventHandlers();
 
-    // Retrieve weather data for the default city
-    changeTempWithCity(city);
 });
