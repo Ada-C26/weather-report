@@ -6,6 +6,7 @@ const landscape = document.getElementById("emojis");
 const temperatureButton = document.getElementById("temperature_button");
 const cityInput = document.getElementById("city");
 const proxyURL = "http://127.0.0.1:5000";
+const weatherOptions = document.getElementById("weather_options");
 
 function updateTemperatureColor() {
     temperatureValue.textContent = temperature;
@@ -104,3 +105,21 @@ temperatureButton.addEventListener("click", () => {
         alert("Could not get weather data.");
     });
 });
+
+const updateSky = () => {
+  const selectedWeather = weatherOptions.value;
+  const skyDisplay = document.querySelector("#sky-display");
+
+  if (selectedWeather === "Sunny") {
+    skyDisplay.textContent = "☁️ ☁️ ☁️ ☀️ ☁️ ☁️";
+  } else if (selectedWeather === "Cloudy") {
+    skyDisplay.textContent = "☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️";
+  } else if (selectedWeather === "Rainy") {
+    skyDisplay.textContent = "🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧";
+  } else if (selectedWeather === "Snowy") {
+    skyDisplay.textContent = "🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨";
+  }
+};
+
+weatherOptions.addEventListener("change", updateSky);
+updateSky();
