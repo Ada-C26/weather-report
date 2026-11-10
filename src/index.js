@@ -59,3 +59,61 @@ updateTempGraphics(temperature);
 // Event logic
 decreaseTempControl.addEventListener('click', decreaseTemperature);
 increaseTempControl.addEventListener('click', increaseTemperature);
+
+const findLatitudeAndLongitude = (query) => {
+  return axios
+    .get('https://ada-weather-report-proxy-server.onrender.com/location', {
+      params: {
+        q: query,
+      },
+    })
+    .then((response) => {
+      const lat = response.data[0].lat;
+      const lon = response.data[0].lon;
+      const temp = findWeather(lat, lon);
+      return temp;
+    })
+    .catch((error) => {
+      console.log('error!', error);
+    });
+};
+
+const findWeather = (lat, lon) => {
+  return axios
+    .get('https://ada-weather-report-proxy-server.onrender.com/weather', {
+      params: {
+        lat: lat,
+        lon: lon,
+      },
+    })
+    .then((response) => {
+      let tempKelvin = response.data.main.temp;
+      let tempFahrenheit = Math.round((tempKelvin - 273.15) * (9 / 5) + 32);
+      return tempFahrenheit;
+    })
+    .catch((error) => {
+      console.log('error!', error);
+    });
+};
+
+const changeTempWithCity = () => {
+  findLatitudeAndLongitude(state.city)
+    .then((newTemp) => {
+      state.temp = newTemp;
+      updateTemp();
+      return newTemp;
+    })
+    .catch((error) => {
+      console.log('Error updating temp:', error);
+    });
+};
+
+changeTempWithCity(state.city);
+changeTempWithCity(state.city);
+
+document.addEventListener('DOMContentLoaded', () => {
+  registerEventHandlers();
+  changeTempWithCity();
+});
+
+
