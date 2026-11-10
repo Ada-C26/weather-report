@@ -1,37 +1,9 @@
-//----- Wave 1-------
 "use strict";
 
+//Grab elements from index.html
+const cityNameInput = document.getElementById("cityNameInput");//Wave3
+const headerCityName = document.getElementById("headerCityName");//Wave3
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//-----Wave 3-----
-//get the two elements from index.html
-const cityNameInput = document.getElementById("cityNameInput");
-const headerCityName = document.getElementById("headerCityName");
 
 //Starting data
 
