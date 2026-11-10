@@ -8,7 +8,7 @@ Talk through each section with your partner. Add notes on what you discussed and
 
 ## Collaboration vs. Individual Work Expectations
 *Clarify your collaboration expectations - does your group want to write code together all of the time? Or divide work to do independently, then come together to share accomplishments? What tools and technologies can help your collaboration?*
-- Divide and conquer work individually 
+- Divide and conquer work individually, use Git branches, use Trello board for tasks
 
 ## Learning Style
 *How does each team member learn best in project settings?*
@@ -27,5 +27,5 @@ Talk through each section with your partner. Add notes on what you discussed and
 *Other co-working agreements that were not captured in the above sections.*
 
 ## Signatures
-Najma Shanle Cady M
+Najma Shanle, Rahma Mahdi, Cady M
 Date: November, 10th, 2026
