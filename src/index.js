@@ -5,6 +5,7 @@ const decreaseControl = document.getElementById("decrease_control")
 const landscape = document.getElementById("emojis");
 const temperatureButton = document.getElementById("temperature_button");
 const cityInput = document.getElementById("city");
+const resetButton = document.getElementById("reset_button");
 const proxyURL = "http://127.0.0.1:5000";
 const weatherOptions = document.getElementById("weather_options");
 
@@ -123,3 +124,7 @@ const updateSky = () => {
 
 weatherOptions.addEventListener("change", updateSky);
 updateSky();
+
+resetButton.addEventListener("click", () => {
+  cityInput.value = "Seattle";
+});
