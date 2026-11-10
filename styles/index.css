@@ -171,3 +171,18 @@ background-color: lightsteelblue;
     height: 500px;
     object-fit: cover;
 }
+
+#currentTempButton {
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+#currentTempButton:hover {
+    background-color: #09203a;
+    color: white;
+    cursor: pointer;
+}
+
+#currentTempButton:active {
+    background-color: #2c5f91;
+    transform: scale(0.97);
+}
