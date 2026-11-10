@@ -44,6 +44,9 @@ state.decreaseTempControl.addEventListener('click', () => {
   updateTempColor(state.tempValue.textContent);
   updateLandscape(state.tempValue.textContent);
 });
+state.cityNameInput.addEventListener('input', () => {
+  state.headerCityName.textContent = state.cityNameInput.value;
+});
 
 const updateTempColor = (temp) => {
   if (temp >= 80) {
