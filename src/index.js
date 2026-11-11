@@ -1,55 +1,49 @@
 // Temp control variables
-
 const increaseTempControl = document.getElementById('increaseTempControl');
 const decreaseTempControl = document.getElementById('decreaseTempControl');
 const currentTempButton = document.getElementById('currentTempButton');
 const cityNameInput = document.getElementById('cityNameInput');
 const tempValue = document.getElementById('tempValue');
 const landscape = document.getElementById('landscape');
+const skyDropdown = document.getElementById('skySelect');
 
 let temperature = 0;
 
-
-// Update temperature display color and landscapes
-
+// Update temperature display color and landscape
 const updateTempGraphics = (temperature) => {
     if (temperature >= 90) {
         tempValue.style.color = 'red';
-        changeLandscape('desert.jpg');
+        changeImage('landscape_photos/desert.jpg', landscape);
     } else if (temperature < 90 && temperature >= 80) {
         tempValue.style.color = 'pink';
-        changeLandscape('beach.jpg');
+        changeImage('landscape_photos/beach.jpg', landscape);
     } else if (temperature < 80 && temperature >= 70) {
         tempValue.style.color = 'orange'
-        changeLandscape('meadow.jpg');
+        changeImage('landscape_photos/meadow.jpg', landscape);
     } else if (temperature < 70 && temperature >= 60) {
         tempValue.style.color = 'yellow'
-        changeLandscape('springs.jpg');
+        changeImage('landscape_photos/springs.jpg', landscape);
     } else if (temperature < 60 && temperature >= 50) {
         tempValue.style.color = 'green'
-        changeLandscape('forest.jpg');
+        changeImage('landscape_photos/forest.jpg', landscape);
     } else if (temperature < 50 && temperature >= 40) {
         tempValue.style.color = 'teal'
-        changeLandscape('mist.jpg');
+        changeImage('landscape_photos/mist.jpg', landscape);
     } else {
         tempValue.style.color = 'blue'
-        changeLandscape('snow.jpg');
+        changeImage('landscape_photos/snow.jpg', landscape);
     }
 };
 
-
 // Change landscape
-
-const changeLandscape = (imageName) => {
+const changeImage = (imageName, container) => {
     const image = document.createElement('img');
 
-    image.src = `./assets/landscape_photos/${imageName}`;
-    landscape.replaceChildren(image);
+    image.src = `./assets/${imageName}`;
+    container.replaceChildren(image);
 };
 
-
 // Temperature controls
-
 const updateTemp = () => {
     tempValue.textContent = `${temperature}°F`;
     updateTempGraphics(temperature);
@@ -65,6 +59,28 @@ const increaseTemperature = () => {
 const decreaseTemperature = () => {
     temperature -= 1;
     updateTemp();
+};
+
+
+// Update the sky
+const updateSky = (skySelect) => {
+    if (skySelect === 'Sunny') {
+        document.body.style.backgroundImage = "url('./assets/sky_photos/sunny.jpg')";
+    } else if (skySelect === 'Cloudy') {
+        document.body.style.backgroundImage = "url('./assets/sky_photos/cloudy.jpg')";
+    } else if (skySelect === 'Stormy') {
+        document.body.style.backgroundImage = "url('./assets/sky_photos/stormy.jpg')";
+    } else if (skySelect === 'Rainy') {
+        document.body.style.backgroundImage = "url('./assets/sky_photos/rainy.jpg')";
+    } else if (skySelect === 'Snowy') {
+        document.body.style.backgroundImage = "url('./assets/sky_photos/snowy.jpg')";
+    } else if (skySelect === 'Dusk') {
+        document.body.style.backgroundImage = "url('./assets/sky_photos/dusk.jpg')";
+    } else if (skySelect === 'Dawn') {
+        document.body.style.backgroundImage = "url('./assets/sky_photos/dawn.jpg')";
+    } else if (skySelect === 'Rainbow') {
+        document.body.style.backgroundImage = "url('./assets/sky_photos/rainbow.jpg')";
+    }
 };
 
 
@@ -143,6 +159,11 @@ const registerEventHandlers = () => {
         const city = cityNameInput.value.trim();
         changeTempWithCity(city);
     });
+
+    skyDropdown.addEventListener('change', (event) => {
+        const selectedSky = event.target.value;
+        updateSky(selectedSky);
+    });
 };
 
 
@@ -154,5 +175,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Register event handlers
     registerEventHandlers();
+
+    // Initialize sky baackground 
+    updateSky(skyDropdown.value);
 
 });
