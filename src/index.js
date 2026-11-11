@@ -6,6 +6,7 @@ const currentTempButton = document.getElementById('currentTempButton');
 const cityNameInput = document.getElementById('cityNameInput');
 const tempValue = document.getElementById('tempValue');
 const landscape = document.getElementById('landscape');
+const headerCityName = document.getElementById('headerCityName');
 
 let temperature = 0;
 
@@ -132,13 +133,19 @@ const changeTempWithCity = (city) => {
         });
 };
 
+// Update city name
+
+const updateCityName = () => {
+    headerCityName.textContent = cityNameInput.value;
+};
+
 
 // Event logic
 
 const registerEventHandlers = () => {
     decreaseTempControl.addEventListener('click', decreaseTemperature);
     increaseTempControl.addEventListener('click', increaseTemperature);
-
+    cityNameInput.addEventListener('input', updateCityName);
     currentTempButton.addEventListener('click', () => {
         const city = cityNameInput.value.trim();
         changeTempWithCity(city);
@@ -151,7 +158,8 @@ const registerEventHandlers = () => {
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize temperature display
     updateTemp();
-
+    // Initialize city name display
+    updateCityName();
     // Register event handlers
     registerEventHandlers();
 
