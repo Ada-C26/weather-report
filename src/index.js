@@ -6,6 +6,8 @@ const state = {
     increaseBtn: null,
     decreaseBtn: null,
     displayLandscape: null,
+    cityName: null,
+    cityNameInput: null,
 };
 
 const tempColor = {
@@ -44,12 +46,16 @@ const initUI = () =>{
     state.increaseBtn = document.getElementById('increaseTempControl');
     state.decreaseBtn = document.getElementById('decreaseTempControl');
     state.displayLandscape = document.getElementById('landscape');
+    state.cityName = document.getElementById('cityName');
+    state.cityNameInput = document.getElementById('cityNameInput');
 
     updateTempColor();
     updateLandscape();
 
     handleEvent();
 };
+
+
 
 const updateTempColor = () => {
     for (const [key, value] of Object.entries(tempColor)) {
@@ -58,14 +64,6 @@ const updateTempColor = () => {
     }
     }
 };
-
-// const updateLandscape = () => {
-//     for (const [key, value] of Object.entries(landscapeBackground)) {
-//         if (state.currentTemp >= Number(key)) {
-//             state.displayLandscape.textContent = value;
-//     }
-//     }
-// };
 
     const updateLandscape = () => {
         for (const item of landscapeBackground) {
@@ -83,6 +81,11 @@ const handleEvent = () => {
     state.decreaseBtn.addEventListener('click', () => {
         decreaseTemperature();
     });
+
+    state.cityNameInput.addEventListener('input', (e) => {
+        state.cityName.textContent = e.target.value || 'City Name';
+    })
 };
+
 
 initUI();
