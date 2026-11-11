@@ -1,7 +1,7 @@
 'use strict';
 
 const state = {
-    currentTemp: 0,
+    currentTemp: 60,
     displayTemp: 0,
     increaseBtn: null,
     decreaseBtn: null,
@@ -18,12 +18,20 @@ const tempColor = {
     0: 'teal',
 };
 
-const landscapeBackground = [
-    [ '-128.6', '🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲' ],
-    [ 60, '🌾🌾_🍃_🪨__🛤_🌾🌾🌾_🍃' ],
-    [ 70, '🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷' ],
-    [ 80, '🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂' ],
-];
+// const landscapeBackground = [
+//     [ '-128.6', '🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲' ],
+//     [ 60, '🌾🌾_🍃_🪨__🛤_🌾🌾🌾_🍃' ],
+//     [ 70, '🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷' ],
+//     [ 80, '🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂' ],
+// ];
+
+const landscapeBackground = {
+    80 : '🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂',
+    70 : '🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷',
+    60 : '🌾🌾_🍃_🪨__🛤_🌾🌾🌾_🍃',
+    0 : '🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲',
+};
+
 
 
 const increaseTemperature = () => {
@@ -65,13 +73,21 @@ const updateTempColor = () => {
     }
 };
 
+    // const updateLandscape = () => {
+    //     for (const item of landscapeBackground) {
+    //         if (state.currentTemp >= Number(item[0])) {
+    //             state.displayLandscape.textContent = item[1];
+    //         }
+    //     }
+    // }
+
     const updateLandscape = () => {
-        for (const item of landscapeBackground) {
-            if (state.currentTemp >= Number(item[0])) {
-                state.displayLandscape.textContent = item[1];
+        for (const [key,value] of Object.entries(landscapeBackground)) {
+            if (state.currentTemp >= Number(key)) {
+                state.displayLandscape.textContent = value;
             }
         }
-    }
+    };
 
 const handleEvent = () => {
     state.increaseBtn.addEventListener('click', () => {
