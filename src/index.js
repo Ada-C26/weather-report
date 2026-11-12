@@ -1,12 +1,14 @@
-import { tempColor, skyOptions } from './constants.js';
+import { tempColor, landscapeBackground, skyOptions } from './constants.js';
 import { kelvinToFahrenheit } from './helpers.js';
 import { getCoordinates, getWeather } from './services.js';
 
-const state ={
-  currentTemp : 49,
-  displayTemp :0,
+const state = {
+  currentTemp: 60,
+  displayTemp: 0,
   increaseBtn: null,
   decreaseBtn: null,
+  displayLandscape: null,
+  cityName: null,
   cityNameInput: null,
   currentTempBtn: null,
   skySelect: null,
@@ -18,12 +20,14 @@ const increaseTemperature = () => {
   state.currentTemp += 1;
   state.displayTemp.textContent = state.currentTemp;
   updateTempColor();
+  updateLandscape();
 };
 
 const decreaseTemperature = () => {
   state.currentTemp -= 1;
   state.displayTemp.textContent = state.currentTemp;
   updateTempColor();
+  updateLandscape();
 };
 
 const initUI = () =>{
@@ -32,6 +36,8 @@ const initUI = () =>{
 
   state.increaseBtn = document.getElementById('increaseTempControl');
   state.decreaseBtn = document.getElementById('decreaseTempControl');
+  state.displayLandscape = document.getElementById('landscape');
+  state.cityName = document.getElementById('cityName');
   state.cityNameInput = document.getElementById('cityNameInput');
   state.currentTempBtn = document.getElementById('currentTempButton');
   state.skySelect = document.getElementById('skySelect');
@@ -39,6 +45,7 @@ const initUI = () =>{
   state.gardenContent = document.getElementById('gardenContent');
 
   updateTempColor();
+  updateLandscape();
   updateSky();
 
   handleEvent();
@@ -49,6 +56,15 @@ const updateTempColor = () => {
   for (const [key, value] of Object.entries(tempColor)) {
     if (state.currentTemp >= Number(key)) {
       state.displayTemp.style.color = value;
+    }
+  }
+};
+
+const updateLandscape = () => {
+  state.displayLandscape.textContent = landscapeBackground[0];
+  for (const [key, value] of Object.entries(landscapeBackground)) {
+    if (state.currentTemp >= Number(key)) {
+      state.displayLandscape.textContent = value;
     }
   }
 };
@@ -66,6 +82,7 @@ const getRealtimeTemperature = async () => {
     state.currentTemp = kelvinToFahrenheit(kelvin);
     state.displayTemp.textContent = state.currentTemp;
     updateTempColor();
+    updateLandscape();
   } catch (error) {
     console.log('Error getting temperature:', error);
   }
@@ -84,6 +101,10 @@ const handleEvent = () =>{
 
   state.decreaseBtn.addEventListener('click', () => {
     decreaseTemperature();
+  });
+
+  state.cityNameInput.addEventListener('input', (e) => {
+    state.cityName.textContent = e.target.value || 'City Name';
   });
 
   state.currentTempBtn.addEventListener('click', getRealtimeTemperature);

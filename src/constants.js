@@ -8,6 +8,13 @@ export const tempColor = {
   0: 'teal',
 };
 
+export const landscapeBackground = {
+  80: '🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂',
+  70: '🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷',
+  60: '🌾🌾_🍃_🪨__🛤_🌾🌾🌾_🍃',
+  0: '🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲',
+};
+
 export const skyOptions = {
   Sunny: '☁️ ☁️ ☁️ ☀️ ☁️ ☁️',
   Cloudy: '☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️',
