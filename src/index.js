@@ -1,4 +1,4 @@
-import { tempColor, landscapeBackground, skyOptions, cityDefaultName } from './constants.js';
+import { tempColor, landscapeBackground, skyOptions, cityDefaultName ,defaultTempScale} from './constants.js';
 import { kelvinToFahrenheit } from './helpers.js';
 import { getCoordinates, getWeather } from './services.js';
 
@@ -15,6 +15,9 @@ const state = {
   skySelect: null,
   displaySky: null,
   gardenContent: null,
+  convertTempBtn: null,
+  scaleText :null,
+  currentTempScale: null,
 };
 
 const increaseTemperature = () => {
@@ -45,7 +48,10 @@ const initUI = () =>{
   state.displaySky = document.getElementById('sky');
   state.gardenContent = document.getElementById('gardenContent');
   state.restBtn = document.getElementById('cityNameReset');
+  state.convertTempBtn = document.getElementById('convertTempButton');
+  state.scaleText = document.getElementById('scale');
 
+  updateScale();
   updateTempColor();
   updateLandscape();
   updateSky();
@@ -57,6 +63,25 @@ const initUI = () =>{
 const updateCityName = (cityName= cityDefaultName)=>{
   state.cityName.textContent = cityName;
   state.cityNameInput.value = cityName;
+};
+
+const updateScale = (currentScale = defaultTempScale)=>{
+  state.currentTempScale = currentScale;
+  state.scaleText.textContent = currentScale;
+};
+
+const switchTemp = ()=>{
+  if(state.currentTempScale == defaultTempScale){//  c=>f
+    // F -> C More accurate: (num - 32) * 5/9
+    updateScale('C');
+    state.currentTemp = Math.ceil((state.currentTemp- 32)*(5/9));
+  }else{
+    //  C -> F formula : More accurate (num * 9/5) + 32
+    updateScale();
+    state.currentTemp = Math.ceil((state.currentTemp* (9/5)) + 32);
+  }
+
+  state.displayTemp.textContent = state.currentTemp;
 };
 
 
@@ -123,6 +148,8 @@ const handleEvent = () =>{
   state.currentTempBtn.addEventListener('click', getRealtimeTemperature);
 
   state.skySelect.addEventListener('change', updateSky);
+
+  state.convertTempBtn.addEventListener('click',switchTemp);
 };
 
 initUI();
