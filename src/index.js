@@ -1,4 +1,4 @@
-import { tempColor, landscapeBackground, skyOptions } from './constants.js';
+import { tempColor, landscapeBackground, skyOptions, cityDefaultName } from './constants.js';
 import { kelvinToFahrenheit } from './helpers.js';
 import { getCoordinates, getWeather } from './services.js';
 
@@ -11,6 +11,7 @@ const state = {
   cityName: null,
   cityNameInput: null,
   currentTempBtn: null,
+  restBtn: null,
   skySelect: null,
   displaySky: null,
   gardenContent: null,
@@ -37,19 +38,27 @@ const initUI = () =>{
   state.increaseBtn = document.getElementById('increaseTempControl');
   state.decreaseBtn = document.getElementById('decreaseTempControl');
   state.displayLandscape = document.getElementById('landscape');
-  state.cityName = document.getElementById('cityName');
+  state.cityName = document.getElementById('headerCityName');
   state.cityNameInput = document.getElementById('cityNameInput');
   state.currentTempBtn = document.getElementById('currentTempButton');
   state.skySelect = document.getElementById('skySelect');
   state.displaySky = document.getElementById('sky');
   state.gardenContent = document.getElementById('gardenContent');
+  state.restBtn = document.getElementById('cityNameReset');
 
   updateTempColor();
   updateLandscape();
   updateSky();
+  updateCityName();
 
   handleEvent();
 };
+
+const updateCityName = (cityName= cityDefaultName)=>{
+  state.cityName.textContent = cityName;
+  state.cityNameInput.value = cityName;
+};
+
 
 const updateTempColor = () => {
   state.displayTemp.style.color = 'teal';
@@ -104,7 +113,11 @@ const handleEvent = () =>{
   });
 
   state.cityNameInput.addEventListener('input', (e) => {
-    state.cityName.textContent = e.target.value || 'City Name';
+    updateCityName( e.target.value );
+  });
+
+  state.restBtn.addEventListener('click', ()=>{
+    updateCityName();
   });
 
   state.currentTempBtn.addEventListener('click', getRealtimeTemperature);
