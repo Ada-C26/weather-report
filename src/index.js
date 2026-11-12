@@ -1,4 +1,6 @@
-'use strict';
+import { tempColor } from './constants.js';
+import { kelvinToFahrenheit } from './helpers.js';
+import { getCoordinates, getWeather } from './services.js';
 
 const state ={
   currentTemp : 49,
@@ -8,17 +10,6 @@ const state ={
   cityNameInput: null,
   currentTempBtn: null,
 };
-
-const PROXY_URL = 'http://127.0.0.1:5000';
-
-const tempColor = {
-  80: 'red',
-  70: 'orange',
-  60: 'yellow',
-  50: 'green',
-  0: 'teal',
-};
-
 
 const increaseTemperature = () => {
   state.currentTemp += 1;
@@ -47,6 +38,7 @@ const initUI = () =>{
 };
 
 const updateTempColor = () => {
+  state.displayTemp.style.color = 'teal';
   for (const [key, value] of Object.entries(tempColor)) {
     if (state.currentTemp >= Number(key)) {
       state.displayTemp.style.color = value;
@@ -54,35 +46,19 @@ const updateTempColor = () => {
   }
 };
 
-const kelvinToFahrenheit = (kelvin) => {
-  return Math.round((kelvin - 273.15) * (9 / 5) + 32);
-};
-
-const getCoordinates = async (cityName) => {
-  const response = await axios.get(`${PROXY_URL}/location`, {
-    params: { q: cityName },
-  });
-  const { lat, lon } = response.data[0];
-  return { lat, lon };
-};
-
-const getWeather = async ({ lat, lon }) => {
-  const response = await axios.get(`${PROXY_URL}/weather`, {
-    params: { lat, lon },
-  });
-  return response.data.main.temp;
-};
-
 const getRealtimeTemperature = async () => {
   const cityName = state.cityNameInput.value.trim();
-  console.log('Getting temperature for:', cityName);
+  if (!cityName) {
+    return;
+  }
 
   try {
     const coordinates = await getCoordinates(cityName);
-    console.log('Coordinates:', coordinates);
-
     const kelvin = await getWeather(coordinates);
-    console.log('Temperature in Kelvin:', kelvin);
+
+    state.currentTemp = kelvinToFahrenheit(kelvin);
+    state.displayTemp.textContent = state.currentTemp;
+    updateTempColor();
   } catch (error) {
     console.log('Error getting temperature:', error);
   }
