@@ -86,10 +86,10 @@ const switchTemp = ()=>{
 
 
 const updateTempColor = () => {
-  state.displayTemp.style.color = 'teal';
   for (const [key, value] of Object.entries(tempColor)) {
     if (state.currentTemp >= Number(key)) {
-      state.displayTemp.style.color = value;
+      state.displayTemp.className = value;
+      document.body.style.backgroundColor = value;
     }
   }
 };
