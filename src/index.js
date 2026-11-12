@@ -64,6 +64,11 @@ state.skySelect.addEventListener('change', () => {
   updateSky(selectedValue);
 });
 
+state.cityNameReset.addEventListener('click', () => {
+  state.cityNameInput.value = state.defaultCityName;
+  state.headerCityName.textContent = state.defaultCityName;
+});
+
 const updateTempColor = (temp) => {
   if (temp >= 80) {
     state.tempValue.style.color = TEMPER_COLOR[80];
