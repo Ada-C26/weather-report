@@ -16,7 +16,8 @@ margin: 2rem;
 
 .header__header {
 color: white;
-grid-column: span 3;
+/* grid-column: span 3; */
+grid-column: span 2;
 display: flex;
 align-items: center;
 margin: 2rem auto 3rem 0;
@@ -100,7 +101,7 @@ align-items: center;
 color: white;
 }
 
-.garden__content {
+/* .garden__content {
 min-height: 200px;
 max-width: fit-content;
 margin: auto;
@@ -112,6 +113,30 @@ justify-content: space-between;
 
 border-radius: 8px;
 font-size: 2em;
+} */
+
+.garden__content {
+    width: 100%;
+    max-width: 700px;
+    height: 300px;
+    box-sizing: border-box;
+    margin: auto;
+    padding: 2rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    border-radius: 8px;
+    font-size: 2em;
+    background-color: rgb(221, 255, 255);
+}
+
+#sky,
+#landscape {
+    width: 100%;
+    text-align: center;
 }
 
 .city-name__reset-btn {
