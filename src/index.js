@@ -15,6 +15,13 @@ const TEMPER_LANDSCAPE = {
   59: `🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲`,
 };
 
+const SKY = {
+  Sunny: '☁️ ☁️ ☁️ ☀️ ☁️ ☁️',
+  Cloudy: '☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️',
+  Rainy: '🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧',
+  Snowy: '🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨',
+};
+
 const state = {
   defaultTemperature: 70,
   defaultSky: 'Sunny',
@@ -52,6 +59,11 @@ state.currentTempButton.addEventListener(
   async () => await updateTemp(),
 );
 
+state.skySelect.addEventListener('change', () => {
+  const selectedValue = state.skySelect.value;
+  updateSky(selectedValue);
+});
+
 const updateTempColor = (temp) => {
   if (temp >= 80) {
     state.tempValue.style.color = TEMPER_COLOR[80];
@@ -76,6 +88,14 @@ const updateLandscape = (temp) => {
   } else {
     state.landscape.textContent = TEMPER_LANDSCAPE[59];
   }
+};
+
+const updateSky = (sky) => {
+  state.sky.textContent = SKY[sky];
+
+  const skyBackground = sky.toLowerCase();
+  state.gardenContent.classList.remove('sunny', 'cloudy', 'rainy', 'snowy');
+  state.gardenContent.classList.add(skyBackground);
 };
 
 const getLatitudeAndLongitude = (query) => {
@@ -134,6 +154,7 @@ const onload = () => {
   state.tempValue.textContent = state.defaultTemperature;
   updateTempColor(state.tempValue.textContent);
   state.skySelect.value = state.defaultSky;
+  updateSky(state.defaultSky);
   state.cityNameInput.value = state.defaultCityName;
   state.headerCityName.textContent = state.defaultCityName;
   state.landscape.textContent = state.defaultLandscape;
