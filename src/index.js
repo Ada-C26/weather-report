@@ -47,6 +47,10 @@ state.decreaseTempControl.addEventListener('click', () => {
 state.cityNameInput.addEventListener('input', () => {
   state.headerCityName.textContent = state.cityNameInput.value;
 });
+state.currentTempButton.addEventListener(
+  'click',
+  async () => await updateTemp(),
+);
 
 const updateTempColor = (temp) => {
   if (temp >= 80) {
@@ -72,6 +76,58 @@ const updateLandscape = (temp) => {
   } else {
     state.landscape.textContent = TEMPER_LANDSCAPE[59];
   }
+};
+
+const getLatitudeAndLongitude = (query) => {
+  return axios
+    .get('http://localhost:5000/location', {
+      params: {
+        q: query,
+      },
+    })
+    .then((response) => {
+      const { lat: latitude, lon: longtitude } = response.data[0];
+      return { latitude, longtitude };
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+const getCurrentTemp = (latitude, longtitude) => {
+  return axios
+    .get('http://localhost:5000/weather', {
+      params: {
+        lat: latitude,
+        lon: longtitude,
+      },
+    })
+    .then((response) => {
+      return response.data.main.temp;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+const kelvinToFahrenheit = (kelvin) => ((kelvin - 273.15) * 9) / 5 + 32;
+
+const updateTemp = () => {
+  const city = state.cityNameInput.value;
+
+  const cityLocation = getLatitudeAndLongitude(city);
+
+  const cityCurrentTemp = cityLocation.then(({ latitude, longtitude }) => {
+    return getCurrentTemp(latitude, longtitude);
+  });
+
+  return cityCurrentTemp.then((temp) => {
+    const tempFahrenheit = kelvinToFahrenheit(temp);
+    state.tempValue.textContent = Math.round(tempFahrenheit);
+    updateTempColor(state.tempValue.textContent);
+    updateLandscape(state.tempValue.textContent);
+    return tempFahrenheit;
+  });
 };
 
 const onload = () => {
