@@ -9,6 +9,8 @@ const state ={
   currentTempBtn: null,
 };
 
+const PROXY_URL = 'http://127.0.0.1:5000';
+
 const tempColor = {
   80: 'red',
   70: 'orange',
@@ -52,9 +54,28 @@ const updateTempColor = () => {
   }
 };
 
-const getRealtimeTemperature = () => {
+const kelvinToFahrenheit = (kelvin) => {
+  return Math.round((kelvin - 273.15) * (9 / 5) + 32);
+};
+
+const getCoordinates = async (cityName) => {
+  const response = await axios.get(`${PROXY_URL}/location`, {
+    params: { q: cityName },
+  });
+  const { lat, lon } = response.data[0];
+  return { lat, lon };
+};
+
+const getRealtimeTemperature = async () => {
   const cityName = state.cityNameInput.value.trim();
   console.log('Getting temperature for:', cityName);
+
+  try {
+    const coordinates = await getCoordinates(cityName);
+    console.log('Coordinates:', coordinates);
+  } catch (error) {
+    console.log('Error getting coordinates:', error);
+  }
 };
 
 const handleEvent = () =>{
