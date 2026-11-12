@@ -1,4 +1,4 @@
-import { tempColor } from './constants.js';
+import { tempColor, skyOptions } from './constants.js';
 import { kelvinToFahrenheit } from './helpers.js';
 import { getCoordinates, getWeather } from './services.js';
 
@@ -11,6 +11,7 @@ const state ={
   currentTempBtn: null,
   skySelect: null,
   displaySky: null,
+  gardenContent: null,
 };
 
 const increaseTemperature = () => {
@@ -35,8 +36,10 @@ const initUI = () =>{
   state.currentTempBtn = document.getElementById('currentTempButton');
   state.skySelect = document.getElementById('skySelect');
   state.displaySky = document.getElementById('sky');
+  state.gardenContent = document.getElementById('gardenContent');
 
   updateTempColor();
+  updateSky();
 
   handleEvent();
 };
@@ -69,7 +72,9 @@ const getRealtimeTemperature = async () => {
 };
 
 const updateSky = () => {
-  console.log('Selected sky:', state.skySelect.value);
+  const sky = state.skySelect.value;
+  state.displaySky.textContent = skyOptions[sky];
+  state.gardenContent.className = `garden__content ${sky.toLowerCase()}`;
 };
 
 const handleEvent = () =>{

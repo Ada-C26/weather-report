@@ -7,3 +7,10 @@ export const tempColor = {
   50: 'green',
   0: 'teal',
 };
+
+export const skyOptions = {
+  Sunny: '☁️ ☁️ ☁️ ☀️ ☁️ ☁️',
+  Cloudy: '☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️',
+  Rainy: '🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧',
+  Snowy: '🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨',
+};
