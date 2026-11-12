@@ -8,6 +8,11 @@ const cityInput = document.getElementById("city");
 const resetButton = document.getElementById("reset_button");
 const proxyURL = "http://127.0.0.1:5000";
 const weatherOptions = document.getElementById("weather_options");
+const subtitle = document.getElementById("subtitle");
+
+function updateSubtitle(cityName) {
+    subtitle.textContent = `For the lovely city of ${cityName}`;
+}
 
 function updateTemperatureColor() {
     temperatureValue.textContent = temperature;
@@ -85,6 +90,7 @@ temperatureButton.addEventListener("click", () => {
     })
     .then((response) => {
         const weatherData = response.data;
+        console.log("Resposta de /weather:", weatherData);
 
         if (!weatherData.main || typeof weatherData.main.temp !== "number") {
             throw new Error(
@@ -100,6 +106,7 @@ temperatureButton.addEventListener("click", () => {
 
         updateTemperatureColor();
         updateLandscape();
+        updateSubtitle(cityName);
     })
     .catch((error) => {
         console.error("Could not fetch weather data:", error);
@@ -121,6 +128,8 @@ const updateSky = () => {
     skyDisplay.textContent = "🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨";
   }
 };
+
+
 
 weatherOptions.addEventListener("change", updateSky);
 updateSky();
