@@ -8,8 +8,55 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/index.css">
+    <script defer src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script defer src="./src/index.js"></script>
 </head>
 <body>
+    <header class="tittle_section">
+    <h1> Weather Report </h1>
+    <h2 id="subtitle"> For the lovely city of Seattle</h2>
+    </header>
+    <div class="weather-layout">
+        <section class="temperature_section">
+            <h2> Temperature </h2>
+            <div> 
+            <span id="increase_control">⬆️</span>
+            <span id="temperature_value"></span>
+            <span id="decrease_control">⬇️</span>
+            </div>
+            <div>
+                <button id="temperature_button"> Get Realtime Temperature </button>
+            </div>
+        </section>
+
+        <section class="weather_section">
+            <h2> Sky </h2>
+            <select id="weather_options">
+                <option>Sunny</option>
+                <option>Cloudy</option>
+                <option>Rainy</option>
+                <option>Snowy</option>
+            </select>
+        </section>
+
+        <section class="city_section">
+            <h2> City Name </h2>
+            <div> 
+            <input id="city" value="Seattle">
+            </div>
+            <div>
+                <button id="reset_button"> Reset </button>
+            </div>
+        </section>
+
+        <section class="garden_section">
+            <h2> Weather Garden </h2>
+            <div id="sky">     
+                <div id="sky-display"></div>
+                <p id="emojis"> 🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂</p>
+            </div>
+        </section>
+    </div>
 </body>
 </html>
+
