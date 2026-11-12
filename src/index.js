@@ -66,6 +66,13 @@ const getCoordinates = async (cityName) => {
   return { lat, lon };
 };
 
+const getWeather = async ({ lat, lon }) => {
+  const response = await axios.get(`${PROXY_URL}/weather`, {
+    params: { lat, lon },
+  });
+  return response.data.main.temp;
+};
+
 const getRealtimeTemperature = async () => {
   const cityName = state.cityNameInput.value.trim();
   console.log('Getting temperature for:', cityName);
@@ -73,8 +80,11 @@ const getRealtimeTemperature = async () => {
   try {
     const coordinates = await getCoordinates(cityName);
     console.log('Coordinates:', coordinates);
+
+    const kelvin = await getWeather(coordinates);
+    console.log('Temperature in Kelvin:', kelvin);
   } catch (error) {
-    console.log('Error getting coordinates:', error);
+    console.log('Error getting temperature:', error);
   }
 };
 
