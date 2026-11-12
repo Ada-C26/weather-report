@@ -6,6 +6,7 @@ const cityHeader = document.querySelector('#headerCityName');
 const skySelect = document.querySelector('#skySelect');
 const sky = document.querySelector('#sky');
 const gardenContent = document.querySelector('#gardenContent');
+const cityNameReset = document.querySelector('#cityNameReset');
 
 
 // Wave 3: City Name
@@ -15,7 +16,6 @@ function updateCityName() {
 
 cityInput.addEventListener('input', updateCityName);
 
-// Display initial city name
 updateCityName();
 
 // Wave 4: API calls
@@ -53,3 +53,9 @@ skySelect.addEventListener('change', updateSky);
 
 
 // Wave 6: Reset city name
+function resetCityName() {
+  cityInput.value = 'Seattle';
+  cityHeader.textContent = 'Seattle';
+}
+
+cityNameReset.addEventListener('click' , resetCityName);
