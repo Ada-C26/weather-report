@@ -9,6 +9,8 @@ const state ={
   decreaseBtn: null,
   cityNameInput: null,
   currentTempBtn: null,
+  skySelect: null,
+  displaySky: null,
 };
 
 const increaseTemperature = () => {
@@ -31,6 +33,8 @@ const initUI = () =>{
   state.decreaseBtn = document.getElementById('decreaseTempControl');
   state.cityNameInput = document.getElementById('cityNameInput');
   state.currentTempBtn = document.getElementById('currentTempButton');
+  state.skySelect = document.getElementById('skySelect');
+  state.displaySky = document.getElementById('sky');
 
   updateTempColor();
 
@@ -64,6 +68,10 @@ const getRealtimeTemperature = async () => {
   }
 };
 
+const updateSky = () => {
+  console.log('Selected sky:', state.skySelect.value);
+};
+
 const handleEvent = () =>{
   state.increaseBtn.addEventListener('click', () => {
     increaseTemperature();
@@ -74,6 +82,8 @@ const handleEvent = () =>{
   });
 
   state.currentTempBtn.addEventListener('click', getRealtimeTemperature);
+
+  state.skySelect.addEventListener('change', updateSky);
 };
 
 initUI();
