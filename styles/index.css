@@ -18,6 +18,7 @@ body {
 
 .header__header {
     color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
     grid-column: span 3;
     display: flex;
     align-items: center;
@@ -100,6 +101,7 @@ body {
 
 .garden__section>h2 {
     color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
 }
 
 .garden__content {
@@ -172,6 +174,12 @@ button {
 
 .temp_scale {
     display: flex;
+}
+
+.error-message {
+    color: #c62828;
+    font-size: 0.9rem;
+    margin: 0.5rem;
 }
 
 .scale {

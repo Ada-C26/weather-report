@@ -17,6 +17,7 @@ const state = {
   gardenContent: null,
   convertTempBtn: null,
   scaleText :null,
+  errorMessage: null,
   currentTempScale: null,
 };
 
@@ -50,6 +51,7 @@ const initUI = () =>{
   state.restBtn = document.getElementById('cityNameReset');
   state.convertTempBtn = document.getElementById('convertTempButton');
   state.scaleText = document.getElementById('scale');
+  state.errorMessage = document.getElementById('errorMessage');
 
   updateScale();
   updateTempColor();
@@ -93,6 +95,7 @@ const getTempInFahrenheit = () => {
 
 const updateTempColor = () => {
   const tempF = getTempInFahrenheit();
+
   for (const [key, value] of Object.entries(tempColor)) {
     if (tempF >= Number(key)) {
       state.displayTemp.className = value;
@@ -113,7 +116,10 @@ const updateLandscape = () => {
 
 const getRealtimeTemperature = async () => {
   const cityName = state.cityNameInput.value.trim();
+  state.errorMessage.textContent = '';
+
   if (!cityName) {
+    state.errorMessage.textContent = 'Please enter a city name.';
     return;
   }
 
@@ -131,6 +137,7 @@ const getRealtimeTemperature = async () => {
     updateLandscape();
   } catch (error) {
     console.log('Error getting temperature:', error);
+    state.errorMessage.textContent = `Couldn't get the temperature for "${cityName}".`;
   }
 };
 
