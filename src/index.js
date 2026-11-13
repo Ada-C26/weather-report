@@ -1,5 +1,5 @@
 import { tempColor, landscapeBackground, skyOptions, cityDefaultName ,defaultTempScale} from './constants.js';
-import { kelvinToFahrenheit, fahrenheitToCelsius, celsiusToFahrenheit } from './helpers.js';
+import { kelvinToFahrenheit, kelvinToCelsius, fahrenheitToCelsius, celsiusToFahrenheit } from './helpers.js';
 import { getCoordinates, getWeather } from './services.js';
 
 const state = {
@@ -73,10 +73,10 @@ const updateScale = (currentScale = defaultTempScale)=>{
 const switchTemp = ()=>{
   if(state.currentTempScale == defaultTempScale){//  c=>f
     updateScale('C');
-    state.currentTemp = Math.ceil(fahrenheitToCelsius(state.currentTemp));
+    state.currentTemp = Math.round(fahrenheitToCelsius(state.currentTemp));
   }else{
     updateScale();
-    state.currentTemp = Math.ceil(celsiusToFahrenheit(state.currentTemp));
+    state.currentTemp = Math.round(celsiusToFahrenheit(state.currentTemp));
   }
 
   state.displayTemp.textContent = state.currentTemp;
@@ -121,7 +121,11 @@ const getRealtimeTemperature = async () => {
     const coordinates = await getCoordinates(cityName);
     const kelvin = await getWeather(coordinates);
 
-    state.currentTemp = kelvinToFahrenheit(kelvin);
+    if (state.currentTempScale === 'C') {
+      state.currentTemp = kelvinToCelsius(kelvin);
+    } else {
+      state.currentTemp = kelvinToFahrenheit(kelvin);
+    }
     state.displayTemp.textContent = state.currentTemp;
     updateTempColor();
     updateLandscape();
