@@ -1,5 +1,5 @@
 import { tempColor, landscapeBackground, skyOptions, cityDefaultName ,defaultTempScale} from './constants.js';
-import { kelvinToFahrenheit } from './helpers.js';
+import { kelvinToFahrenheit, fahrenheitToCelsius, celsiusToFahrenheit } from './helpers.js';
 import { getCoordinates, getWeather } from './services.js';
 
 const state = {
@@ -72,13 +72,11 @@ const updateScale = (currentScale = defaultTempScale)=>{
 
 const switchTemp = ()=>{
   if(state.currentTempScale == defaultTempScale){//  c=>f
-    // F -> C More accurate: (num - 32) * 5/9
     updateScale('C');
-    state.currentTemp = Math.ceil((state.currentTemp- 32)*(5/9));
+    state.currentTemp = Math.ceil(fahrenheitToCelsius(state.currentTemp));
   }else{
-    //  C -> F formula : More accurate (num * 9/5) + 32
     updateScale();
-    state.currentTemp = Math.ceil((state.currentTemp* (9/5)) + 32);
+    state.currentTemp = Math.ceil(celsiusToFahrenheit(state.currentTemp));
   }
 
   state.displayTemp.textContent = state.currentTemp;
