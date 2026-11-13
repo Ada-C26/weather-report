@@ -6,7 +6,7 @@ export const defaultTempScale ='F';
 export const tempColor = {
   80: 'red',
   70: 'orange',
-  60: 'yellow',
+  60: 'gold',
   50: 'green',
   0: 'teal',
 };
