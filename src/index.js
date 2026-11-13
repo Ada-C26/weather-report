@@ -80,12 +80,21 @@ const switchTemp = ()=>{
   }
 
   state.displayTemp.textContent = state.currentTemp;
+  updateTempColor();
+  updateLandscape();
 };
 
+const getTempInFahrenheit = () => {
+  if (state.currentTempScale === 'C') {
+    return celsiusToFahrenheit(state.currentTemp);
+  }
+  return state.currentTemp;
+};
 
 const updateTempColor = () => {
+  const tempF = getTempInFahrenheit();
   for (const [key, value] of Object.entries(tempColor)) {
-    if (state.currentTemp >= Number(key)) {
+    if (tempF >= Number(key)) {
       state.displayTemp.className = value;
       document.body.style.backgroundColor = value;
     }
@@ -93,9 +102,10 @@ const updateTempColor = () => {
 };
 
 const updateLandscape = () => {
+  const tempF = getTempInFahrenheit();
   state.displayLandscape.textContent = landscapeBackground[0];
   for (const [key, value] of Object.entries(landscapeBackground)) {
-    if (state.currentTemp >= Number(key)) {
+    if (tempF >= Number(key)) {
       state.displayLandscape.textContent = value;
     }
   }
