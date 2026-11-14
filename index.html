@@ -8,8 +8,46 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/index.css">
+    <script defer src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script defer src="./src/index.js"></script>
 </head>
 <body>
+    <section id="cityname">
+        <h1 class=cityname_head> Seattle </h1>
+        <input 
+            type="text"
+            id="cityinput"
+            placeholder="Enter a city name"
+        >
+        <button id="changecity">Submit</button>
+        <button id="resetcity">Reset</button>
+    </section>
+    <section>
+        <button id="realtime_weather">Real Time Weather</button>
+    </section>
+    <div class="leftright">
+        <section id="temperature">
+            <h1 class=temperature_head> Temperature </h1>
+                <h2 id="temparature_display">68°F</h2>
+            <button id="increaseTemp">Increase Temperature</button>
+            <button id="decreaseTemp">Decrease Temperature</button>
+        </section>
+
+        <section id="weathergarden">
+            <h1 class=weathergarden_head> Weather Garden </h1>
+            <div id="landscape"></div>
+        </section>
+    </div>
+
+      <section id="sky">
+        <h1 class=sky_head> Sky </h1>
+        <select id="skySelect">
+            <option value="sunny">Sunny</option>
+            <option value="cloudy">Cloudy</option>
+            <option value="rainy">Rainy</option>
+            <option value="snowy">Snowy</option>
+        </select>
+        <div id="skyDisplay"></div>
+    </section>
 </body>
 </html>

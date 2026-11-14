@@ -1,4 +1,6 @@
 .vscode
 .DS_Store
 node_modules
-.parcel-cache
+.parcel-cache.env
+*.env
+.env

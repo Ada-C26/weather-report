@@ -1,0 +1,265 @@
+* {
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+    background-color: lightcyan;
+    color: black;
+}
+
+header{
+    padding: 20px 40px;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#temperature-display {
+  font-size: 80px;
+  text-align: center;
+  margin: 40px auto;
+  width: 300px;
+  height: 150px;
+  background-color: lightblue;
+  border: 2px solid blue;
+  padding: 20px;
+}
+
+#landscape {
+  font-size: 40px;
+  text-align: center;
+}
+
+#cityname {
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
+  background-image: linear-gradient(
+            rgba(255, 255, 255, 0.6),
+            rgba(255, 255, 255, 0.6)
+        ),url("../assets/weather.jpg");
+}
+
+#cityinput {
+    width: 200px;
+    height: 30px;
+    margin: 20px auto;
+    font-family: 'Rubik', sans-serif;
+    font-size: 20px;
+}
+
+#changecity {
+    width: 90px;
+    height: 30px;
+    border-radius: 50px;
+    background-color: lightgoldenrodyellow;
+    margin: 1px auto;
+    font-family: 'Rubik', sans-serif;
+    font-size: 20px;
+}
+
+#resetcity {
+    width: 90px;
+    height: 30px;
+    border-radius: 50px;
+    background-color: lightgoldenrodyellow;
+    margin: 1px auto;
+    font-family: 'Rubik', sans-serif;
+    font-size: 20px;
+}
+
+#temperature {
+  background-color: lightblue;
+  border: 2px solid blue;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  width: 800px;
+  border-radius: 50px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+#weathergarden {
+  background-color: lightblue;
+  border: 2px solid blue;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 800px;
+  justify-content: center;
+  border-radius: 50px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.leftright {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    justify-content: center;
+}
+
+#sky {
+  background-color: lightblue;
+  border: 2px solid blue;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.sky_head {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+#skySelect {
+  font-size: 1.2rem;
+  padding: 6px 12px;
+}
+
+#skyDisplay {
+  font-size: 3rem;
+}
+
+.cityname_head {
+    font-family: 'Rubik', sans-serif;
+    text-align: center;
+    background-color: #F0F6FF;
+    width: 250px;
+    margin: 10px auto;
+    padding: 30px;
+    border-radius: 50px;
+}
+
+.temperature_head {
+    font-family: 'Rubik', sans-serif;
+    text-align: center;
+    background-color: #F0F6FF;
+    margin: 0;
+    padding: 30px;
+}
+
+.weathergarden_head {
+    font-family: 'Rubik', sans-serif;
+    text-align: center;
+    background-color: #F0F6FF;
+    margin: 0;
+    padding: 30px;
+}
+
+.sky_head {
+    font-family: 'Rubik', sans-serif;
+    text-align: center;
+    background-color: #F0F6FF;
+    margin: 0;
+    padding: 30px;
+}
+
+#increaseTemp {
+    font-family: 'Rubik', sans-serif;
+    width: 200px;
+    height: 50px;
+    margin: 5px auto;
+    border-radius: 50px;
+    font-size: 20px;
+}
+
+#decreaseTemp {
+    font-family: 'Rubik', sans-serif;
+    width: 200px;
+    height: 50px;
+    margin: 5px auto;
+    border-radius: 50px;
+    font-size: 20px;
+}
+
+.temp--red { 
+    color: red; 
+    margin: 40px auto;
+    width: 100px;
+    height: 50px;
+    background-color:white;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+}
+.temp--orange { 
+    color: orange;
+    margin: 40px auto; 
+    width: 100px;
+    height: 50px;
+    background-color:white;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    }
+
+.temp--yellow { 
+    color: gold; 
+    margin: 40px auto;
+    width: 100px;
+    height: 50px;
+    background-color:white;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+}
+.temp--green { 
+    color: green; 
+    margin: 40px auto;
+    width: 100px;
+    height: 50px;
+    background-color:white;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+}
+.temp--teal { 
+    color: teal;
+    margin: 40px auto;
+    width: 100px;
+    height: 50px;
+    background-color:white;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+}
+
+#realtime_weather {
+    width: 200px;
+    height: 70px;
+    border-radius: 50px;
+    background-color: lightcoral;
+    margin: 1px auto;
+    font-family: 'Rubik', sans-serif;
+    font-size: 20px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    margin-top: 20px;
+}
