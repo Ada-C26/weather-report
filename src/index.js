@@ -1,5 +1,7 @@
 'use strict';
 
+const baseURL = 'https://ada-weather-report-proxy-server.onrender.com/';
+
 const TEMPER_COLOR = {
   80: 'red',
   70: 'orange',
@@ -105,7 +107,7 @@ const updateSky = (sky) => {
 
 const getLatitudeAndLongitude = (query) => {
   return axios
-    .get('http://localhost:5000/location', {
+    .get(`${baseURL}location`, {
       params: {
         q: query,
       },
@@ -121,7 +123,7 @@ const getLatitudeAndLongitude = (query) => {
 
 const getCurrentTemp = (latitude, longtitude) => {
   return axios
-    .get('http://localhost:5000/weather', {
+    .get(`${baseURL}weather`, {
       params: {
         lat: latitude,
         lon: longtitude,
