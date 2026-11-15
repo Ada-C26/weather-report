@@ -1,28 +1,37 @@
-// 'use strict'; reemember to export
-
 const state = {
   temperature: 70,
   degree: 'F',
 };
 
-const updateTemperature = () => {
-  if (state.degree == 'F') {
-    tempValue.textContent = state.temperature;
-  } else if (state.degree == 'C') {
-    tempValue.textContent = convertFtoC(state.temperature);
-  }
-};
-
+// DOM elements
 const tempValue = document.getElementById('tempValue');
 const tempUp = document.getElementById('increaseTempControl');
 const tempDown = document.getElementById('decreaseTempControl');
-const cityNameInput = document.getElementById('cityNameInput');
-const cityNameDisplay = document.getElementById('headerCityName');
-const resetButton = document.getElementById('reset');
-const currentTempButton = document.getElementById('currentTempButton');
-const skySelect = document.getElementById('skySelect');
 const fahrenheit = document.getElementById('fahrenheit');
 const celsius = document.getElementById('celsius');
+const cityNameInput = document.getElementById('cityNameInput');
+const cityNameDisplay = document.getElementById('headerCityName');
+const currentTempButton = document.getElementById('currentTempButton');
+const resetButton = document.getElementById('reset');
+const skySelect = document.getElementById('skySelect');
+
+const convertKtoF = (K) => {
+  const F = (K - 273.15) * (9 / 5) + 32;
+  return Math.round(F);
+};
+
+const convertFtoC = (F) => {
+  const C = (F - 32) / 1.8;
+  return Math.round(C);
+};
+
+const updateTemperature = () => {
+  if (state.degree === 'F') {
+    tempValue.textContent = state.temperature;
+  } else if (state.degree === 'C') {
+    tempValue.textContent = convertFtoC(state.temperature);
+  }
+};
 
 const tempColorChange = () => {
   const tempClasses = {
@@ -73,6 +82,23 @@ const changeSky = () => {
   }
 };
 
+const renderTemperature = () => {
+  updateTemperature();
+  tempColorChange();
+  changeLandscape();
+  changeSky();
+};
+
+const tempApiCall = async () => {
+  try {
+    const apiTemp = await getWeather(cityNameInput.value);
+    state.temperature = convertKtoF(apiTemp.temp);
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 const updateCityName = () => {
   cityNameDisplay.textContent = cityNameInput.value;
 };
@@ -80,21 +106,6 @@ const updateCityName = () => {
 const resetCityName = () => {
   cityNameDisplay.textContent = 'Seattle';
   cityNameInput.value = 'Seattle';
-};
-
-const tempApiCall = async () => {
-  const apiTemp = await getWeather(cityNameInput.value);
-  state.temperature = convertKtoF(apiTemp.temp);
-
-  updateTemperature();
-  tempColorChange();
-  changeLandscape();
-};
-
-const renderTemperature = () => {
-  updateTemperature();
-  tempColorChange();
-  changeLandscape();
 };
 
 const registerEventHandlers = () => {
@@ -111,10 +122,13 @@ const registerEventHandlers = () => {
   });
   resetButton.addEventListener('click', () => {
     resetCityName();
+    state.temperature = 70;
+    state.degree = 'F';
+    fahrenheit.checked = true;
     renderTemperature();
   });
-  currentTempButton.addEventListener('click', () => {
-    tempApiCall();
+  currentTempButton.addEventListener('click', async () => {
+    await tempApiCall();
     renderTemperature();
   });
   skySelect.addEventListener('change', () => {
@@ -130,9 +144,6 @@ const registerEventHandlers = () => {
   });
 };
 
-// refreshPage()
-changeLandscape();
-tempColorChange();
-changeSky();
+renderTemperature();
 
 document.addEventListener('DOMContentLoaded', registerEventHandlers);
