@@ -157,6 +157,7 @@ body {
   align-items: center;
   gap: 1rem;
   min-height: 120px;
+  grid-template-columns: max-content minmax(0, 1fr);
 }
 
 .settings__section h3 {
@@ -182,10 +183,13 @@ body {
   grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
   gap: 0.5rem;
+  min-width: 0;
+  grid-template-columns: auto minmax(0, 1fr);
 }
 
 .degree-toggle label {
   min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .garden__section {
