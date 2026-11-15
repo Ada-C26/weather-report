@@ -4,14 +4,14 @@ import { getCoordinates, getWeather } from './services.js';
 
 const state = {
   currentTemp: 60,
-  displayTemp: 0,
+  displayTemp: null,
   increaseBtn: null,
   decreaseBtn: null,
   displayLandscape: null,
   cityName: null,
   cityNameInput: null,
   currentTempBtn: null,
-  restBtn: null,
+  resetBtn: null,
   skySelect: null,
   displaySky: null,
   gardenContent: null,
@@ -48,7 +48,7 @@ const initUI = () =>{
   state.skySelect = document.getElementById('skySelect');
   state.displaySky = document.getElementById('sky');
   state.gardenContent = document.getElementById('gardenContent');
-  state.restBtn = document.getElementById('cityNameReset');
+  state.resetBtn = document.getElementById('cityNameReset');
   state.convertTempBtn = document.getElementById('convertTempButton');
   state.scaleText = document.getElementById('scale');
   state.errorMessage = document.getElementById('errorMessage');
@@ -73,7 +73,7 @@ const updateScale = (currentScale = defaultTempScale)=>{
 };
 
 const switchTemp = ()=>{
-  if(state.currentTempScale == defaultTempScale){//  c=>f
+  if (state.currentTempScale === defaultTempScale) { // F => C
     updateScale('C');
     state.currentTemp = Math.round(fahrenheitToCelsius(state.currentTemp));
   }else{
@@ -88,7 +88,7 @@ const switchTemp = ()=>{
 
 const getTempInFahrenheit = () => {
   if (state.currentTempScale === 'C') {
-    return celsiusToFahrenheit(state.currentTemp);
+    return Math.round(celsiusToFahrenheit(state.currentTemp));
   }
   return state.currentTemp;
 };
@@ -160,7 +160,7 @@ const handleEvent = () =>{
     updateCityName( e.target.value );
   });
 
-  state.restBtn.addEventListener('click', ()=>{
+  state.resetBtn.addEventListener('click', ()=>{
     updateCityName();
   });
 
