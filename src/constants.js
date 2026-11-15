@@ -1,4 +1,5 @@
-export const PROXY_URL = 'http://127.0.0.1:5000';
+export const PROXY_URL = 'https://weather-report-proxy-server-v4a5.onrender.com';
+//'http://127.0.0.1:5000';
 
 export const cityDefaultName = 'Seattle';
 export const defaultTempScale ='F';
