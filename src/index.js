@@ -18,7 +18,7 @@ const tempUp = document.getElementById('increaseTempControl');
 const tempDown = document.getElementById('decreaseTempControl');
 const cityNameInput = document.getElementById('cityNameInput');
 const cityNameDisplay = document.getElementById('headerCityName');
-const cityNameButton = document.getElementById('cityNameReset');
+const resetButton = document.getElementById('reset');
 const currentTempButton = document.getElementById('currentTempButton');
 const skySelect = document.getElementById('skySelect');
 const fahrenheit = document.getElementById('fahrenheit');
@@ -91,56 +91,51 @@ const tempApiCall = async () => {
   changeLandscape();
 };
 
+const renderTemperature = () => {
+  updateTemperature();
+  tempColorChange();
+  changeLandscape();
+};
+
 const registerEventHandlers = () => {
   tempUp.addEventListener('click', () => {
     state.temperature += 1;
-    updateTemperature();
-    tempColorChange();
-    changeLandscape();
+    renderTemperature();
   });
   tempDown.addEventListener('click', () => {
     state.temperature -= 1;
-    updateTemperature();
-    tempColorChange();
-    changeLandscape();
+    renderTemperature();
   });
   cityNameInput.addEventListener('input', () => {
     updateCityName();
   });
-  cityNameButton.addEventListener('click', () => {
+  resetButton.addEventListener('click', () => {
     resetCityName();
+    renderTemperature();
   });
   currentTempButton.addEventListener('click', () => {
     tempApiCall();
+    renderTemperature();
   });
   skySelect.addEventListener('change', () => {
     changeSky();
   });
   fahrenheit.addEventListener('change', () => {
     state.degree = 'F';
-    updateTemperature();
-    tempColorChange();
-    changeLandscape();
+    renderTemperature();
   });
   celsius.addEventListener('change', () => {
     state.degree = 'C';
-    updateTemperature();
-    tempColorChange();
-    changeLandscape();
+    renderTemperature();
   });
 };
 
+// refreshPage()
 changeLandscape();
 tempColorChange();
 changeSky();
 
 document.addEventListener('DOMContentLoaded', registerEventHandlers);
-
-// const refreshPage = () => {
-//   changeLandscape();
-//   tempColorChange();
-//   changeSky();
-// };
 
 const findLatitudeAndLongitude = async (query) => {
   // Return the promise chain created by the axios call
