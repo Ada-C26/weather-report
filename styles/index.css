@@ -59,7 +59,6 @@ body {
 }
 
 .temperature__section {
-  grid-row: 2;
   display: flex;
   align-items: center;
 }
@@ -106,8 +105,21 @@ body {
     color 150ms ease;
 }
 
+.sky__section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.sky__section #sky {
+  width: 100%;
+  text-align: center;
+  font-size: 3rem;
+  line-height: 1.2;
+}
+
 .city__section {
-  grid-row: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
