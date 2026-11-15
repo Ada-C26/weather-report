@@ -50,14 +50,19 @@ const changeLandscape = () => {
 const changeSky = () => {
   const sky = document.getElementById('skySelect').value;
   const skyDisplay = document.getElementById('sky');
+  const background = document.getElementById('weather-background');
   if (sky === 'Sunny') {
     skyDisplay.textContent = '☁️ ☁️ ☁️ ☀️ ☁️ ☁️';
+    background.style.backgroundImage = "url('./assets/sunny.jpg')";
   } else if (sky === 'Cloudy') {
     skyDisplay.textContent = '☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️';
+    background.style.backgroundImage = "url('./assets/cloudy.jpg')";
   } else if (sky === 'Rainy') {
     skyDisplay.textContent = '🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧';
+    background.style.backgroundImage = "url('./assets/rainy.jpg')";
   } else if (sky === 'Snowy') {
     skyDisplay.textContent = '🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨';
+    background.style.backgroundImage = "url('./assets/snowy.jpg')";
   }
 };
 
