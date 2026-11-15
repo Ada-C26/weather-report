@@ -2,10 +2,15 @@
 
 const state = {
   temperature: 70,
+  degree: 'F',
 };
 
 const updateTemperature = () => {
-  tempValue.textContent = state.temperature;
+  if (state.degree == 'F') {
+    tempValue.textContent = state.temperature;
+  } else if (state.degree == 'C') {
+    tempValue.textContent = convertFtoC(state.temperature);
+  }
 };
 
 const tempValue = document.getElementById('tempValue');
@@ -16,6 +21,8 @@ const cityNameDisplay = document.getElementById('headerCityName');
 const cityNameButton = document.getElementById('cityNameReset');
 const currentTempButton = document.getElementById('currentTempButton');
 const skySelect = document.getElementById('skySelect');
+const fahrenheit = document.getElementById('fahrenheit');
+const celsius = document.getElementById('celsius');
 
 const tempColorChange = () => {
   const tempClasses = {
@@ -78,6 +85,7 @@ const resetCityName = () => {
 const tempApiCall = async () => {
   const apiTemp = await getWeather(cityNameInput.value);
   state.temperature = convertKtoF(apiTemp.temp);
+
   updateTemperature();
   tempColorChange();
   changeLandscape();
@@ -108,6 +116,18 @@ const registerEventHandlers = () => {
   skySelect.addEventListener('change', () => {
     changeSky();
   });
+  fahrenheit.addEventListener('change', () => {
+    state.degree = 'F';
+    updateTemperature();
+    tempColorChange();
+    changeLandscape();
+  });
+  celsius.addEventListener('change', () => {
+    state.degree = 'C';
+    updateTemperature();
+    tempColorChange();
+    changeLandscape();
+  });
 };
 
 changeLandscape();
@@ -115,6 +135,12 @@ tempColorChange();
 changeSky();
 
 document.addEventListener('DOMContentLoaded', registerEventHandlers);
+
+// const refreshPage = () => {
+//   changeLandscape();
+//   tempColorChange();
+//   changeSky();
+// };
 
 const findLatitudeAndLongitude = async (query) => {
   // Return the promise chain created by the axios call
@@ -180,5 +206,15 @@ const getWeather = async (query) => {
 
 const convertKtoF = (K) => {
   const F = (K - 273.15) * (9 / 5) + 32;
+  return Math.round(F);
+};
+
+const convertFtoC = (F) => {
+  const C = (F - 32) / 1.8;
+  return Math.round(C);
+};
+
+const convertCtoF = (C) => {
+  const F = C * 1.8 + 32;
   return Math.round(F);
 };

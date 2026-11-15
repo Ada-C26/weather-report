@@ -44,7 +44,7 @@
     </section>
     <section class="settings__section grid-item">
       <h3>Settings</h3>
-      <p>Sky</p>
+      <p>Sky:</p>
       <select id="skySelect">
         <option value="Sunny">Sunny</option>
         <option value="Cloudy">Cloudy</option>
@@ -52,9 +52,15 @@
         <option value="Snowy">Snowy</option>
       </select>
       <p>Degree:</p>
-      <div class="degree-buttons">
-        <button id="farenheit">Fahrenheit</button>
-        <button id="celcius">Celsius</button>
+      <div
+        class="degree-toggle"
+        role="radiogroup"
+        aria-label="Temperature units"
+      >
+        <input type="radio" id="fahrenheit" name="degree" value="F" checked />
+        <label for="fahrenheit">Fahrenheit</label>
+        <input type="radio" id="celsius" name="degree" value="C" />
+        <label for="celsius">Celsius</label>
       </div>
     </section>
     <section class="garden__section grid-item">
