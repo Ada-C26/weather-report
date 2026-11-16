@@ -36,6 +36,8 @@ const skySelect = document.getElementById('skySelect');
 const skyContainer = document.getElementById('sky');
 const resetButton = document.getElementById('cityNameReset');
 const convertTempButton = document.getElementById('convertTempButton');
+const gardenContent = document.getElementById('gardenContent');
+const body = document.querySelector('body');
 
 
 // Get displayed temperature
@@ -74,18 +76,28 @@ const renderConvertTempButton = () => {
 // Change temperature color
 const updateTemperatureColor = () => {
   const temperature = state.tempFahrenheit;
+  let temperatureColor;
+  let backgroundColor;
 
   if (temperature >= 80) {
-    tempDisplay.className = 'red';
+    temperatureColor = 'red';
+    backgroundColor = 'soft-coral';
   } else if (temperature >= 70) {
-    tempDisplay.className = 'orange';
+    temperatureColor = 'orange';
+    backgroundColor = 'soft-orange';
   } else if (temperature >= 60) {
-    tempDisplay.className = 'yellow';
+    temperatureColor = 'yellow';
+    backgroundColor = 'soft-yellow';
   } else if (temperature >= 50) {
-    tempDisplay.className = 'green';
+    temperatureColor = 'green';
+    backgroundColor = 'soft-mint';
   } else {
-    tempDisplay.className = 'teal';
+    temperatureColor = 'teal';
+    backgroundColor = 'soft-gray';
   }
+
+  tempDisplay.className = temperatureColor;
+  body.className = backgroundColor;
 };
 
 // Change the landscape
@@ -151,6 +163,9 @@ const resetCityName = () => {
 const renderSky = () => {
   skySelect.value = state.sky;
   skyContainer.textContent = skyOptions[state.sky];
+
+  // Display the background color of the garden content based on the selected sky
+  gardenContent.className = `garden__content ${state.sky.toLowerCase()}`;
 };
 
 // Update sky
