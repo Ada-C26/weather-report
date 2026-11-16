@@ -1,0 +1,246 @@
+/* Solution adapted from Simon de Sal */
+
+h2 {
+  margin: 0 auto 2rem auto;
+}
+
+body {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto auto auto;
+  grid-gap: 1rem;
+
+  width: 80%;
+  min-height: 100vh;
+  box-sizing: border-box;
+  align-content: center;
+
+  font-family: 'Open Sans', sans-serif;
+  color: #334155;
+  letter-spacing: 0.5px;
+  font-size: 16px;
+  margin: 2rem auto;
+}
+
+#weather-background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+
+  background-color: rgb(113, 119, 149);
+  background-image: url('../assets/sunny.jpg');
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+}
+
+.grid-item {
+  border-radius: 8px;
+  padding: 2rem;
+  background-color: rgba(252, 252, 252, 0.6);
+  text-transform: uppercase;
+}
+
+.header__header {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.header__city-name {
+  font-style: oblique;
+  font-size: 2rem;
+}
+
+.header__city-name::before,
+.header__city-name::after {
+  content: '✨';
+}
+
+.temperature__section {
+  display: flex;
+  align-items: center;
+}
+
+.temperature__content {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+#tempValue {
+  font-size: 6rem;
+  line-height: 1;
+  font-weight: 300;
+  text-align: center;
+  margin: 0 0 0 1.5rem;
+  transform: translateY(0.075em);
+}
+
+.temperature__controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+
+  height: 6rem;
+  box-sizing: border-box;
+}
+
+.temperature__controls span {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid rgba(51, 65, 85, 0.2);
+  border-radius: 50%;
+  background: rgba(252, 252, 252, 0.7);
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
+}
+
+.sky__section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.sky__section #sky {
+  width: 100%;
+  text-align: center;
+  font-size: 3rem;
+  line-height: 1.2;
+}
+
+.city__section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+#cityNameInput,
+#skySelect,
+.degree-toggle {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(51, 65, 85, 0.2);
+  border-radius: 999px;
+  background: rgba(252, 252, 252, 0.7);
+  color: #334155;
+  font: inherit;
+  line-height: 1.2;
+}
+
+#cityNameInput:focus,
+#skySelect:focus,
+.degree-toggle:focus {
+  outline: 2px solid #1655cc;
+  outline-offset: 2px;
+}
+
+.settings__section {
+  grid-row: 3 / span 2;
+  grid-column: 3;
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  align-items: center;
+  gap: 1rem;
+  min-height: 120px;
+  grid-template-columns: max-content minmax(0, 1fr);
+}
+
+.settings__section h3 {
+  grid-column: 1 / -1;
+}
+
+.settings__section p {
+  margin: 0;
+}
+
+.city-actions,
+.degree-toggle {
+  display: flex;
+}
+
+.city-actions {
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.degree-toggle {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  grid-template-columns: auto minmax(0, 1fr);
+}
+
+.degree-toggle label {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.garden__section {
+  grid-row: 3 / span 2;
+  grid-column: 1 / span 2;
+  text-align: center;
+  align-self: stretch;
+}
+
+.garden__content {
+  min-height: 120px;
+  max-width: fit-content;
+  margin: auto;
+  padding: 2rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  border-radius: 8px;
+  font-size: 2em;
+}
+
+button {
+  border: 0;
+  background-color: #1655cc;
+  color: white;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.red {
+  color: red;
+}
+
+.orange {
+  color: orange;
+}
+
+.yellow {
+  color: gold;
+}
+
+.yellow-green {
+  color: yellowgreen;
+}
+
+.green {
+  color: green;
+}
+
+.teal {
+  color: teal;
+}

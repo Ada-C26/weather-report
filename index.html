@@ -1,15 +1,77 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Weather Report</title>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="styles/index.css" />
+    <script defer src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- <script defer src="https://ada-weather-report-proxy-server.onrender.com"></script> -->
+    <script defer src="./src/api.js"></script>
     <script defer src="./src/index.js"></script>
-</head>
-<body>
-</body>
+    <!-- loading fonts -->
+    <link rel="preconnect" href="https://googleapis.com" />
+    <link rel="preconnect" href="https://gstatic.com" crossorigin />
+    <link
+      href="https://googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- loading fonts -->
+  </head>
+
+  <body>
+    <div id="weather-background" aria-hidden="true"></div>
+    <header class="header__header grid-item">
+      <h2>Weather Report</h2>
+      <p>for the lovely city of</p>
+      <span id="headerCityName" class="header__city-name">Seattle</span>
+    </header>
+    <section class="temperature__section grid-item">
+      <div class="temperature__content">
+        <span id="tempValue">70</span>
+        <div class="temperature__controls">
+          <span id="increaseTempControl">▲</span>
+          <span id="decreaseTempControl">▼</span>
+        </div>
+      </div>
+    </section>
+    <section class="sky__section grid-item">
+      <div id="sky"></div>
+    </section>
+    <section class="city__section grid-item">
+      <input type="text" id="cityNameInput" value="Seattle" />
+      <div class="city-actions">
+        <button id="currentTempButton">Get temperature</button>
+        <button id="reset" class="reset-btn">Reset</button>
+      </div>
+    </section>
+    <section class="settings__section grid-item">
+      <h3>Settings</h3>
+      <p>Sky:</p>
+      <select id="skySelect">
+        <option value="Sunny">Sunny</option>
+        <option value="Cloudy">Cloudy</option>
+        <option value="Rainy">Rainy</option>
+        <option value="Snowy">Snowy</option>
+      </select>
+      <p>Degree:</p>
+      <div
+        class="degree-toggle"
+        role="radiogroup"
+        aria-label="Temperature units"
+      >
+        <input type="radio" id="fahrenheit" name="degree" value="F" checked />
+        <label for="fahrenheit">Fahrenheit</label>
+        <input type="radio" id="celsius" name="degree" value="C" />
+        <label for="celsius">Celsius</label>
+      </div>
+    </section>
+    <section class="garden__section grid-item">
+      <h3>Weather Garden</h3>
+      <div id="gardenContent" class="garden__content">
+        <div id="landscape"></div>
+      </div>
+    </section>
+  </body>
 </html>
