@@ -8,6 +8,8 @@ const tempValue = document.getElementById("tempValue");//Wave2
 const landscape = document.getElementById("landscape");//Wave2
 const increaseTempControl = document.getElementById("increaseTempControl");//Wave2
 const decreaseTempControl = document.getElementById("decreaseTempControl");//Wave2
+const sky = document.getElementById("sky"); // Wave 5
+const skySelect = document.getElementById("skySelect"); // Wave 5
 
 //Default data
 let temperature = 62;//Wave2
@@ -19,6 +21,7 @@ const updateTempDisplay = () => {
     tempValue.textContent = `${temperature}°F`;
     updateTempColor();
     updateLandscape();
+    updateSky(); // Wave 5
 };
 
 // Increase the temperature.
@@ -45,6 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
     registerTempEventHandlers();
     updateCityName();//Wave3
     registerEventHandlers();//Wave3
+    updateSky(); //Wave 5
 
 });
 
@@ -89,6 +93,7 @@ const updateCityName = () => {
 const registerEventHandlers = () => {
     cityNameInput.addEventListener("input", updateCityName);//Wave3
     currentTempButton.addEventListener("click", getRealtimeTemp)
+    skySelect.addEventListener("change", updateSky); // Wave 5
 };
 
 
@@ -133,5 +138,22 @@ const getRealtimeTemp = async () => {
         updateTempDisplay();
     } catch (error) {
         console.log("Couldn't get the temperature:", error);
+    }
+};
+
+//---------Wave 5 ------------------------
+
+// Change the sky based on the selected option.
+const updateSky = () => {
+    const selectedSky = skySelect.value;
+
+    if (selectedSky === "Sunny") {
+        sky.textContent = "☁️ ☁️ ☁️ ☀️ ☁️ ☁️";
+    } else if (selectedSky === "Cloudy") {
+        sky.textContent = "☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️";
+    } else if (selectedSky === "Rainy") {
+        sky.textContent = "🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧";
+    } else if (selectedSky === "Snowy") {
+        sky.textContent = "🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨";
     }
 };
