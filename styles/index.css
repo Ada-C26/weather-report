@@ -3,17 +3,19 @@
 h2 {
     margin: 0 auto 2rem auto;
 }
-  
-body {
-display: grid;
-grid-template-columns: 1fr 2fr;
-grid-template-rows: auto auto auto auto;
-grid-gap: 1rem;
 
-font-family: "Rubik", sans-serif;
-font-size: 18px;
-background-color: #1b69f9;
-margin: 2rem;
+body {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: auto auto auto auto 1fr;
+    gap: 1rem;
+
+    min-height: calc(100vh - 4rem);
+
+    font-family: "Rubik", sans-serif;
+    font-size: 18px;
+    background-color: #1b69f9;
+    margin: 2rem;
 }
 
 .header__header {
@@ -174,5 +176,36 @@ background-color: lightsteelblue;
 .temperature__buttons {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 10px;
+}
+
+#increaseTempControl,
+#decreaseTempControl {
+    cursor: pointer;
+    transition: transform 0.15s ease;
+}
+
+#increaseTempControl:hover,
+#decreaseTempControl:hover {
+    transform: scale(1.2);
+}
+
+button {
+    cursor: pointer;
+    transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+button:hover {
+    transform: scale(1.03);
+}
+
+.info__footer {
+    grid-column: 1 / -1;
+    grid-row: 5;
+    align-self: end;
+
+    width: 100%;
+    padding: 1rem 0;
+    color: white;
+    text-align: center;
 }
