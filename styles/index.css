@@ -121,7 +121,8 @@ border-radius: 8px;
 font-size: 2em;
 }
 
-.city-name__reset-btn {
+.city-name__reset-btn,
+.city-name__enter-btn {
 border: 0;
 background-color: #1655cc;
 color: white;
@@ -132,6 +133,24 @@ font-family: "Rubik", sans-serif;
 
 .red {
 color: red;
+}
+
+.city-name__reset-btn,
+.city-name__enter-btn {
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.city-name__reset-btn:hover,
+.city-name__enter-btn:hover {
+    background-color: #09203a;
+    color: white;
+    cursor: pointer;
+}
+
+.city-name__reset-btn:active,
+.city-name__enter-btn:active {
+    background-color: #2c5f91;
+    transform: scale(0.97);
 }
 
 .orange {
