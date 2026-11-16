@@ -7,10 +7,10 @@ const TEMP_RANGES = new Map([
 ]);
 
 const SKYOPTIONS = new Map([
-    ['Sunny', '☁️ ☁️ ☁️ ☀️ ☁️ ☁️'],
-    ['Cloudy', '☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️'],
-    ['Rainy', '🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧'],
-    ['Snowy', '🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨']
+    ['Sunny',  { emoji: '☁️ ☁️ ☁️ ☀️ ☁️ ☁️', className: 'sunny' }],
+    ['Cloudy', { emoji: '☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️', className: 'cloudy' }],
+    ['Rainy',  { emoji: '🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧', className: 'rainy' }],
+    ['Snowy',  { emoji: '🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨', className: 'snowy' }],
 ]);
 
 const state = {
@@ -31,7 +31,12 @@ const render = () => {
 
     tempColorAndLandscapeChange();
     document.getElementById('headerCityName').textContent = state.headerCityName;
-    document.getElementById('sky').textContent = SKYOPTIONS.get(state.sky);
+
+    const {emoji, className} = SKYOPTIONS.get(state.sky);
+    document.getElementById('sky').textContent = emoji;
+    const gardenElement = document.getElementById('gardenContent')
+    gardenElement.classList.remove(...[...SKYOPTIONS.values()].map(s => s.className));
+    gardenElement.classList.add(className);
 };
 
 const changeTemp = (step) => {
@@ -39,7 +44,7 @@ const changeTemp = (step) => {
         const currentC = Math.round(fahrenheitToCelsius(state.tempValue));
         state.tempValue = celsiusToFahrenheit(currentC + step);
     } else {
-        state.tempValue = Math.round(state.tempValue) + 1;
+        state.tempValue = Math.round(state.tempValue) + step;
     }
     render();
 };
@@ -94,7 +99,7 @@ const getWeather = () => {
     return getLatLon(state.headerCityName)
         .then(location => {
             if (!location || location.lat == null || location.lon == null) {
-                throw new Error(`Could not find coordinates for '${state.cityName}'`);
+                throw new Error(`Could not find coordinates for '${state.headerCityName}'`);
             }
             const { lat, lon } = location;
             return axios.get(WEATHER_URL, { params: { lat, lon } });
@@ -133,11 +138,14 @@ const switchToCelsius = () => {
 };
 
 const registerEventHandler = (event) => {
+    document.getElementById('tempInF').addEventListener('click', switchToFahrenheit);
+    document.getElementById('tempInC').addEventListener('click', switchToCelsius);
     document.getElementById('increaseTempControl').addEventListener('click', increaseTemp);
     document.getElementById('decreaseTempControl').addEventListener('click', decreaseTemp);
     document.getElementById('cityNameInput').addEventListener('input', updateCityName);
     document.getElementById('currentTempButton').addEventListener('click', getWeather);
     document.getElementById('cityNameReset').addEventListener('click', resetCityName);
+    document.getElementById('skySelect').addEventListener('change', setSky);
     render();
 };
 
