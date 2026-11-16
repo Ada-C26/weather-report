@@ -32,11 +32,7 @@ const render = () => {
     tempColorAndLandscapeChange();
     document.getElementById('headerCityName').textContent = state.headerCityName;
 
-    const {emoji, className} = SKYOPTIONS.get(state.sky);
-    document.getElementById('sky').textContent = emoji;
-    const gardenElement = document.getElementById('gardenContent')
-    gardenElement.classList.remove(...[...SKYOPTIONS.values()].map(s => s.className));
-    gardenElement.classList.add(className);
+    skyChange();
 };
 
 const changeTemp = (step) => {
@@ -64,16 +60,18 @@ const updateCityName = (event) => {
 
 const tempColorAndLandscapeChange = () => {
     const tempValEl = document.getElementById('tempValue');
-
-    const temp = state.tempValue;
     const landscape = document.getElementById('landscape');
+    const temp = state.tempValue;
+
     tempValEl.classList.remove(...getColorsList());
+    document.body.classList.remove(...getColorsList().map(c => `temp-${c}`));
 
     for (const lowestRangeTemp of TEMP_RANGES.keys()) {
         if (temp >= lowestRangeTemp) {
             const colorAndLandcape = TEMP_RANGES.get(lowestRangeTemp);
             tempValEl.classList.add(colorAndLandcape.color);
             landscape.textContent = colorAndLandcape.landscape;
+            document.body.classList.add(`temp-${colorAndLandcape.color}`);
             break;
         }
     }
@@ -115,6 +113,16 @@ const getWeather = () => {
         .catch(error => {
             console.error('Error fetching weather data', error);
         });
+};
+
+const skyChange = () => {
+    const { emoji, className } = SKYOPTIONS.get(state.sky);
+    document.getElementById('sky').textContent = emoji;
+
+    const skyClasses = [...SKYOPTIONS.values()].map(s => `sky-${s.className}`)
+
+    document.body.classList.remove(...skyClasses);
+    document.body.classList.add(`sky-${className}`);
 };
 
 const setSky = (event) => {
@@ -162,4 +170,3 @@ const celsiusToFahrenheit = (c) => {
 const getColorsList = () => [...TEMP_RANGES.values()].map(({ color }) => color);
 
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
-

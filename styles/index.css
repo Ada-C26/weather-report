@@ -199,3 +199,40 @@ background-color: lightsteelblue;
   outline-offset: -4px;
 }
 
+.temperature__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.temperature__header h2 {
+  margin: 0;
+}
+
+:root {
+  --sky-image: none;
+  --temp-tint: transparent;
+}
+
+body {
+  background-color: #1b69f9;
+  background-image:
+    linear-gradient(var(--temp-tint), var(--temp-tint)),
+    var(--sky-image);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  transition: background-color 300ms;
+}
+
+body.sky-sunny  { --sky-image: url("assets/sunny.jpg"); }
+body.sky-cloudy { --sky-image: url("assets/cloudy.jpg"); }
+body.sky-rainy  { --sky-image: url("assets/rainy.jpg"); }
+body.sky-snowy  { --sky-image: url("assets/snowy.jpg"); }
+
+body.temp-red    { --temp-tint: rgba(255, 60, 0, 0.30); }
+body.temp-orange { --temp-tint: rgba(255, 150, 0, 0.25); }
+body.temp-yellow { --temp-tint: rgba(255, 220, 0, 0.20); }
+body.temp-green  { --temp-tint: rgba(0, 180, 80, 0.20); }
+body.temp-teal   { --temp-tint: rgba(0, 120, 200, 0.30); }
