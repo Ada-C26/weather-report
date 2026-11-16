@@ -8,6 +8,7 @@ const landscape = document.getElementById('landscape');
 const headerCityName = document.getElementById('headerCityName');
 const skyDropdown = document.getElementById('skySelect');
 const cityNameReset = document.getElementById('cityNameReset');
+const cityNameEnter = document.getElementById('cityNameEnter');
 const headerWeather = document.getElementById('weatherHeader');
 const headerGarden = document.getElementById('gardenHeader');
 const headers = [headerWeather, headerCityName, headerGarden];
@@ -217,6 +218,10 @@ const registerEventHandlers = () => {
     increaseTempControl.addEventListener('click', increaseTemperature);
     cityNameInput.addEventListener('input', updateCityName);
     cityNameReset.addEventListener('click', resetCityName);
+        cityNameEnter.addEventListener('click', () => {
+        const city = cityNameInput.value.trim();
+        changeTempWithCity(city);
+    });
     currentTempButton.addEventListener('click', () => {
         const city = cityNameInput.value.trim();
         changeTempWithCity(city);
