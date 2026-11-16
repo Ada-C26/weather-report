@@ -198,3 +198,14 @@ background-color: lightsteelblue;
   outline: 2px solid #1655cc;
   outline-offset: -4px;
 }
+
+.temperature__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.temperature__header h2 {
+  margin: 0;
+}

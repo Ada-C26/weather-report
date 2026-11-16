@@ -17,16 +17,18 @@
 <body>
     <header class="header__header">
         <h1>Weather Report</h1>
-        <span>For the lovely city of 
+        <span>For the lovely city of
             <span id="headerCityName" class="header__city-name"></span></span>
     </header>
     <section class="temperature__section">
-        <h2>Temperature</h2>
-        <div class="temperature__content">
+        <div class="temperature__header">
+            <h2>Temperature</h2>
             <div class="unit-toggle">
                 <button id="tempInC">C</button>
                 <button id="tempInF">F</button>
             </div>
+        </div>
+        <div class="temperature__content">
             <div class="temperature__controls">
                 <span id="increaseTempControl">⬆️</span>
                 <span id="tempValue"></span>
