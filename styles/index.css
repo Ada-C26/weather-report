@@ -71,19 +71,23 @@ grid-row: 3;
 grid-row: 4;
 }
 
-/* Get Realtime Temperature button */
-#currentTempButton {
+/* Get Realtime Temperature button + Reset buttons */
+#currentTempButton,
+#cityNameReset {
     cursor: pointer;                       /* pointing-hand cursor on hover */
     transition: background-color 0.2s;     /* smooth color change */
 }
 
-#currentTempButton:hover {
-    background-color: #1655cc;             /* slightly darker blue on hover */
+#currentTempButton:hover,
+#cityNameReset:hover {
+    background-color: #092c6e;             /* slightly darker blue on hover */
 }
 
-#currentTempButton:active {
+#currentTempButton:active,
+#cityNameReset:active {
     transform: scale(0.97);                /* small "press" effect while clicking */
 }
+/***************************************************/
 
 .garden__section {
 grid-row: 2 / span 3;

@@ -92,8 +92,9 @@ const updateCityName = () => {
 //Listeners
 const registerEventHandlers = () => {
     cityNameInput.addEventListener("input", updateCityName);//Wave3
-    currentTempButton.addEventListener("click", getRealtimeTemp)
+    currentTempButton.addEventListener("click", getRealtimeTemp);
     skySelect.addEventListener("change", updateSky); // Wave 5
+    cityNameReset.addEventListener("click", resetCityName);//Wave 6
 };
 
 
@@ -156,4 +157,15 @@ const updateSky = () => {
     } else if (selectedSky === "Snowy") {
         sky.textContent = "🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨";
     }
+};
+
+
+//---------Wave 6-------------------------
+const DEFAULT_CITY = "Seattle";
+
+const cityNameReset = document.getElementById("cityNameReset");
+
+const resetCityName = () => {
+    cityNameInput.value = DEFAULT_CITY;
+    updateCityName();
 };
