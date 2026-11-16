@@ -170,3 +170,9 @@ background-color: lightsteelblue;
     padding: 2rem;
     background-color: #89CFF0;
     }
+
+.temperature__buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}

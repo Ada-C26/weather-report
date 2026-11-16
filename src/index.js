@@ -19,8 +19,9 @@ const landscapeOptions = {
 // Define the application's default state
 const state = {
   city: DEFAULT_CITY_NAME,
-  temperature: 72,
+  tempFahrenheit: 72,
   sky: 'Sunny',
+  tempUnit: 'F',
 };
 
 // DOM Element Selectors
@@ -34,43 +35,45 @@ const currentTempButton = document.getElementById('currentTempButton');
 const skySelect = document.getElementById('skySelect');
 const skyContainer = document.getElementById('sky');
 const resetButton = document.getElementById('cityNameReset');
+const convertTempButton = document.getElementById('convertTempButton');
 
-// Display the city
-const renderCity = () => {
-  cityInput.value = state.city;
-  cityDisplay.textContent = state.city;
+
+// Get displayed temperature
+const getDisplayedTemp = () => {
+  if (state.tempUnit === 'F') {
+    return state.tempFahrenheit;
+  }
+  return (state.tempFahrenheit - 32) * 5 / 9;
+};
+
+// Change temperature by a given amount
+const changeTemperature = amount => {
+  if (state.tempUnit === 'F') {
+    state.tempFahrenheit += amount;
+  } else {
+    const currentCelsius = (state.tempFahrenheit - 32) * 5 / 9;
+    const updatedCelsius = currentCelsius + amount;
+    state.tempFahrenheit = updatedCelsius * 9 / 5 + 32;
+  }
+
+  renderTempRelated();
 };
 
 // Display the temperature
 const renderTemp = () => {
-  tempDisplay.textContent = state.temperature;
+  const displayedTemperature = getDisplayedTemp();
+  tempDisplay.textContent = `${Math.round(displayedTemperature)}°${state.tempUnit}`;
 };
 
-// Display the sky
-const renderSky = () => {
-  skySelect.value = state.sky;
-  skyContainer.textContent = skyOptions[state.sky];
-};
-
-// Increase temperature by 1
-const increaseTemperature = () => {
-  state.temperature += 1;
-  renderTemp();
-  updateTemperatureColor();
-  updateLandscape();
-};
-
-// Decrease temperature by 1
-const decreaseTemperature = () => {
-  state.temperature -= 1;
-  renderTemp();
-  updateTemperatureColor();
-  updateLandscape();
+// Render the text for the convert button
+const renderConvertTempButton = () => {
+  const targetUnit = state.tempUnit === 'F' ? '°C' : '°F';
+  convertTempButton.textContent = `Convert Temperature to ${targetUnit}`;
 };
 
 // Change temperature color
 const updateTemperatureColor = () => {
-  const temperature = state.temperature;
+  const temperature = state.tempFahrenheit;
 
   if (temperature >= 80) {
     tempDisplay.className = 'red';
@@ -87,7 +90,7 @@ const updateTemperatureColor = () => {
 
 // Change the landscape
 const updateLandscape = () => {
-  const temperature = state.temperature;
+  const temperature = state.tempFahrenheit;
   let landscapeType;
 
   if (temperature >= 80) {
@@ -103,16 +106,39 @@ const updateLandscape = () => {
   landscape.textContent = landscapeOptions[landscapeType];
 };
 
+const renderTempRelated = () => {
+  renderTemp();
+  updateTemperatureColor();
+  updateLandscape();
+};
+
+// Increase temperature by 1
+const increaseTemperature = () => {
+  changeTemperature(1);
+};
+
+// Decrease temperature by 1
+const decreaseTemperature = () => {
+  changeTemperature(-1);
+};
+
+// Convert Temperature
+const convertTemp = () => {
+  state.tempUnit = state.tempUnit === 'F' ? 'C' : 'F';
+  renderTempRelated();
+  renderConvertTempButton();
+};
+
+// Display the city
+const renderCity = () => {
+  cityInput.value = state.city;
+  cityDisplay.textContent = state.city;
+};
+
 // Update city name
 const updateCityName = () => {
   state.city = cityInput.value;
   renderCity();
-};
-
-// Update sky
-const updateSky = () => {
-  state.sky = skySelect.value;
-  renderSky();
 };
 
 // Reset the city name
@@ -121,35 +147,27 @@ const resetCityName = () => {
   renderCity();
 };
 
+// Display the sky
+const renderSky = () => {
+  skySelect.value = state.sky;
+  skyContainer.textContent = skyOptions[state.sky];
+};
+
+// Update sky
+const updateSky = () => {
+  state.sky = skySelect.value;
+  renderSky();
+};
+
 const render = () => {
-  renderTemp();
+  renderTempRelated();
+  renderConvertTempButton();
   renderCity();
   renderSky();
-  updateTemperatureColor();
-  updateLandscape();
 };
-
-// Render the initial application state
-render();
-
-// Register all events
-const registerEventHandlers = () => {
-  increaseButton.addEventListener('click', increaseTemperature);
-  decreaseButton.addEventListener('click', decreaseTemperature);
-  cityInput.addEventListener('input', updateCityName);
-  currentTempButton.addEventListener('click', getCurrentTemp);
-  skySelect.addEventListener('change', updateSky);
-  resetButton.addEventListener('click', resetCityName);
-};
-
-// DOM listener
-document.addEventListener('DOMContentLoaded', registerEventHandlers);
-
-
 
 // Calling APIs
 
-// Flask proxy server
 // const API_BASE_URL = 'https://ada-weather-report-proxy-server.onrender.com';
 const API_BASE_URL = 'http://127.0.0.1:5000';
 
@@ -212,10 +230,26 @@ const getCurrentTemp = async () => {
     const tempInKelvin = weather.main.temp;
     const tempInFahrenheit = (tempInKelvin - 273.15) * (9 / 5) + 32;
 
-    state.temperature = Math.round(tempInFahrenheit);
+    state.tempFahrenheit = tempInFahrenheit;
+    state.tempUnit = 'F';
     render();
 
   } catch (error) {
     console.log(`Failed to get the current temperature: ${error}`);
   }
 };
+
+// Register all events
+const registerEventHandlers = () => {
+  increaseButton.addEventListener('click', increaseTemperature);
+  decreaseButton.addEventListener('click', decreaseTemperature);
+  cityInput.addEventListener('input', updateCityName);
+  currentTempButton.addEventListener('click', getCurrentTemp);
+  skySelect.addEventListener('change', updateSky);
+  resetButton.addEventListener('click', resetCityName);
+  convertTempButton.addEventListener('click', convertTemp);
+};
+
+
+render(); // Render the initial application state
+registerEventHandlers();
