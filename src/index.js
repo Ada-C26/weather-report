@@ -1,3 +1,5 @@
+const WEATHER_URL = 'https://ada-weather-report-proxy-server.onrender.com/weather'
+const LOCATION_URL = 'https://ada-weather-report-proxy-server.onrender.com/location'
 const TEMP_RANGES = new Map([
     [80, { 'color': 'red', 'landscape': '🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂' }],
     [70, { 'color': 'orange', 'landscape': '🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷' }],
