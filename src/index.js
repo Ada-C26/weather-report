@@ -40,22 +40,36 @@ const gardenContent = document.getElementById('gardenContent');
 const body = document.querySelector('body');
 
 
+// Helper functions to convert temperatures
+
+const kelvinToFahrenheit = tempKelvin => {
+  return (tempKelvin - 273.15) * 9 / 5 + 32;
+};
+
+const fahrenheitToCelsius = tempFahrenheit => {
+  return (tempFahrenheit - 32) * 5 / 9;
+};
+
+const celsiusToFahrenheit = tempCelsius => {
+  return tempCelsius * 9 / 5 + 32;
+};
+
 // Get displayed temperature
 const getDisplayedTemp = () => {
   if (state.tempUnit === 'F') {
     return state.tempFahrenheit;
   }
-  return (state.tempFahrenheit - 32) * 5 / 9;
+  return fahrenheitToCelsius(state.tempFahrenheit);
 };
 
-// Change temperature by a given amount
-const changeTemperature = amount => {
+// Change temperature by a given amount (tempChange)
+const changeTemperature = tempChange => {
   if (state.tempUnit === 'F') {
-    state.tempFahrenheit += amount;
+    state.tempFahrenheit += tempChange;
   } else {
-    const currentCelsius = (state.tempFahrenheit - 32) * 5 / 9;
-    const updatedCelsius = currentCelsius + amount;
-    state.tempFahrenheit = updatedCelsius * 9 / 5 + 32;
+    const currentCelsius = fahrenheitToCelsius(state.tempFahrenheit);
+    const updatedCelsius = currentCelsius + tempChange;
+    state.tempFahrenheit = celsiusToFahrenheit(updatedCelsius);
   }
 
   renderTempRelated();
@@ -183,7 +197,6 @@ const render = () => {
 
 // Calling APIs
 
-// const API_BASE_URL = 'https://ada-weather-report-proxy-server.onrender.com';
 const API_BASE_URL = 'http://127.0.0.1:5000';
 
 // Input: query: string
@@ -243,7 +256,7 @@ const getCurrentTemp = async () => {
   try {
     const weather = await getWeatherFromQuery(city);
     const tempInKelvin = weather.main.temp;
-    const tempInFahrenheit = (tempInKelvin - 273.15) * (9 / 5) + 32;
+    const tempInFahrenheit = kelvinToFahrenheit(tempInKelvin);
 
     state.tempFahrenheit = tempInFahrenheit;
     state.tempUnit = 'F';
