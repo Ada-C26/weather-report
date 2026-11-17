@@ -58,6 +58,11 @@ const updateCityName = (event) => {
     render();
 };
 
+const resetCityName = () => {
+    document.getElementById('cityNameInput').value = "Seattle";
+    updateCityName();
+};
+
 const tempColorAndLandscapeChange = () => {
     const tempValEl = document.getElementById('tempValue');
     const landscape = document.getElementById('landscape');
@@ -77,6 +82,22 @@ const tempColorAndLandscapeChange = () => {
     }
 };
 
+const skyChange = () => {
+    const { emoji, className } = SKYOPTIONS.get(state.sky);
+    document.getElementById('sky').textContent = emoji;
+
+    const skyClasses = [...SKYOPTIONS.values()].map(s => `sky-${s.className}`)
+
+    document.body.classList.remove(...skyClasses);
+    document.body.classList.add(`sky-${className}`);
+};
+
+const setSky = (event) => {
+    state.sky = event.target.value;
+    render();
+}
+
+// API calls
 const getLatLon = (place) => {
     return axios
         .get(LOCATION_URL, {
@@ -115,36 +136,6 @@ const getWeather = () => {
         });
 };
 
-const skyChange = () => {
-    const { emoji, className } = SKYOPTIONS.get(state.sky);
-    document.getElementById('sky').textContent = emoji;
-
-    const skyClasses = [...SKYOPTIONS.values()].map(s => `sky-${s.className}`)
-
-    document.body.classList.remove(...skyClasses);
-    document.body.classList.add(`sky-${className}`);
-};
-
-const setSky = (event) => {
-    state.sky = event.target.value;
-    render();
-}
-
-const resetCityName = () => {
-    document.getElementById('cityNameInput').value = "Seattle";
-    updateCityName();
-};
-
-const switchToFahrenheit = () => {
-    state.unit = 'F'
-    render();
-};
-
-const switchToCelsius = () => {
-    state.unit = 'C';
-    render();
-};
-
 const registerEventHandler = (event) => {
     document.getElementById('tempInF').addEventListener('click', switchToFahrenheit);
     document.getElementById('tempInC').addEventListener('click', switchToCelsius);
@@ -158,6 +149,16 @@ const registerEventHandler = (event) => {
 };
 
 document.addEventListener('DOMContentLoaded', registerEventHandler);
+
+const switchToFahrenheit = () => {
+    state.unit = 'F'
+    render();
+};
+
+const switchToCelsius = () => {
+    state.unit = 'C';
+    render();
+};
 
 const fahrenheitToCelsius = (f) => {
     return (f - 32) * 5 / 9;
