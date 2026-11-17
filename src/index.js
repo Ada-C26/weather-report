@@ -38,7 +38,13 @@ const fetchWeatherData = async (lat, lon) => {
 
 //input city form, processing and getting result city data from API requests
 const form = document.getElementById('city-input-field');
+
+cityInput.addEventListener('input', () => {
+  document.getElementById('city').textContent = `City: ${cityInput.value}`;
+});
+
 const resetButton = document.getElementById('resetBtn');
+
 
 resetButton.addEventListener('click', () => {
   form.reset();
@@ -137,23 +143,19 @@ function convertTemp(currentTemp, unitToChangeTo, currentUnit) {
 //change color for temperature text
 function changeTextColor(temperature) {
   if (temperature >= 80) {
-    //document.getElementById("numeric-temp").style.color = "red";
+    
     document.getElementById('numeric-temp').style.backgroundColor = 'red';
     document.getElementById('landscape_text').textContent = '🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂'
   } else if (temperature > 69) {
-   // document.getElementById("numeric-temp").style.color = "orange";
     document.getElementById('numeric-temp').style.backgroundColor = 'orange';
     document.getElementById('landscape_text').textContent = '🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷'
   } else if (temperature > 59) {
-   // document.getElementById("numeric-temp").style.color = "yellow";
     document.getElementById('numeric-temp').style.backgroundColor = 'yellow';
     document.getElementById('landscape_text').textContent = '🌾🌾_🍃_🪨__🛤_🌾🌾🌾_🍃'
   } else if (temperature > 49) {
-   // document.getElementById("numeric-temp").style.color = "green";
     document.getElementById('numeric-temp').style.backgroundColor = 'green';
     document.getElementById('landscape_text').textContent = '🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲'
   } else {
-   // document.getElementById("numeric-temp").style.color = "teal";
     document.getElementById('numeric-temp').style.backgroundColor = 'teal';
     document.getElementById('landscape_text').textContent = '🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲'
   } 
