@@ -21,6 +21,7 @@ const skyEmojis = [
     "🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨"
 ];
 // Select HTML elements
+const bodyElement = document.querySelector("body");
 const mainContainer = document.querySelector("main");
 const cityName = document.querySelector("#city-name");
 const weatherConditionText = document.querySelector("#weather-condition");
@@ -70,6 +71,7 @@ const state = {
     weatherCondition: '',
     sky: '01d',
     skyCategory: 'clear',
+    isNight: false,
     landscape: 0,
     background: 0
 };
@@ -164,6 +166,12 @@ const syncSky = () => {
         mainContainer.className = '';
     }
 
+    if (state.isNight) {
+        bodyElement.className = 'night';
+    } else {
+        bodyElement.className = '';
+    }
+
     if (state.invalidated) {
         skyView.className = 'invalidated';
         // weatherIcon.className = 'hidden';
@@ -199,6 +207,7 @@ const queryWeatherData = (lat, lng) => {
             state.sky = resp.data.weather[0].icon;
             state.skyCategory = resp.data.weather[0].main.toLowerCase();
             state.invalidated = false;
+            state.isNight = !(resp.data.dt >= resp.data.sys.sunrise && resp.data.dt < resp.data.sys.sunset);
             syncDOM();
         });
 };
