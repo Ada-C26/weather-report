@@ -30,7 +30,7 @@ img {
 
 .garden {
   position: absolute;
-  bottom: 95px;
+  bottom: 120px;
   width: 30%;
   display: flex;
   justify-content: space-around;
@@ -52,6 +52,21 @@ img {
 
 .garden span:nth-child(even) {
   transform: translateY(5px) rotate(10deg);
+}
+
+#weather-description {
+  border: 3px solid #a9c79a;
+  border-radius: 15px;
+  padding: 15px 15px;
+  width: fit-content;
+  max-width: 30%;
+  margin: 35px auto 0;
+  text-align: center;
+}
+
+#weather-description-label {
+  font-size: 18px;
+  color: #426c3b;
 }
 
 #landscape {
@@ -124,7 +139,7 @@ img {
     font-weight: bold;
 }
 
-#weather-description {
+#weather_description_text {
   font-size: 2rem;
   font-weight: bold;
 }

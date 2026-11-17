@@ -44,6 +44,12 @@ resetButton.addEventListener('click', () => {
   form.reset();
   document.getElementById('city').textContent = 'City:';
   document.getElementById('landscape_text').textContent = '';
+  document.getElementById('wind_speed_text').textContent = 'Wind speed:';
+  document.getElementById('wind_direction_text').textContent = 'Wind direction:';
+  document.getElementById('weather_description_text').textContent = '';
+  document.getElementById('weather_description').style = '';
+  document.getElementById('precipitation_text').textContent = 'Precipitation:';
+  document.getElementById('numeric-temp').textContent = '';
 });
 
 form.addEventListener('submit', async function(event) {
@@ -65,10 +71,11 @@ form.addEventListener('submit', async function(event) {
   //set temp on page to location's current temperature
   document.getElementById('numeric-temp').textContent = `${Math.round((weatherData.main.temp - 273.15) * (9 / 5) + 32)}°F`;
   temp = Math.round((weatherData.main.temp - 273.15) * (9 / 5) + 32)
-  //set wind speed to location's wind speed
-  document.getElementById('wind_speed_text').textContent = `Wind speed: ${Math.round(weatherData.wind.speed)}`;
+  //set wind speed to location's wind speed, direction and weather description
+  document.getElementById('wind_speed_text').textContent = `Wind speed: ${Math.round(weatherData.wind.speed)} mph`;
   document.getElementById('wind_direction_text').textContent = `Wind direction: ${Math.round(weatherData.wind.deg)} degrees`;
   document.getElementById('weather_description_text').textContent = weatherData.weather[0].main;
+  document.getElementById('weather-description-label').textContent = 'Weather Description:';
   changeTextColor(Math.round(weatherData.main.temp - 273.15))
   if(weatherData.rain) {
     if(weatherData.rain['1h'] < 2.5) {
