@@ -1,0 +1,348 @@
+/* Global Styles */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+
+  font-family: 'Rubik', sans-serif;
+  background: #eef5f1;
+  color: #344b45;
+  padding: 30px 20px;
+  transition: background 0.4s ease;
+}
+
+/* Header */
+
+.header__header {
+  text-align: center;
+  padding: 35px 20px;
+  margin: 0 auto 30px;
+  max-width: 900px;
+}
+
+.header__header h1 {
+  font-size: 3rem;
+  color: #315c50;
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+  text-shadow: 3px 3px 5px rgba(52, 75, 69, 0.4);
+}
+
+.header__header > span {
+  font-size: 1.2rem;
+  color: #71877e;
+}
+
+.header__city-name {
+  color: #df9460;
+  font-weight: bold;
+}
+
+/* General Sections */
+
+section {
+  background: #ffffff;
+  max-width: 900px;
+  margin: 25px auto;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(52, 75, 69, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+section:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(52, 75, 69, 0.12);
+}
+
+section h2 {
+  color: #477565;
+  font-size: 1.5rem;
+  margin-bottom: 22px;
+  border-bottom: 2px solid #e6f0eb;
+  padding-bottom: 12px;
+}
+
+/* Temperature */
+
+.temperature__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+}
+
+.temperature__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 35px;
+  font-size: 2rem;
+}
+
+#increaseTempControl,
+#decreaseTempControl {
+  cursor: pointer;
+  background: #e8f3ed;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+#increaseTempControl:hover,
+#decreaseTempControl:hover {
+  background: #cce6d7;
+  transform: scale(1.1);
+}
+
+#tempValue {
+  font-size: 4rem;
+  font-weight: bold;
+  min-width: 140px;
+  text-align: center;
+}
+
+/* Temperature Colors */
+
+.red {
+  color: #e76f6f;
+}
+
+.orange {
+  color: #e99a55;
+}
+
+.yellow {
+  color: #d8b744;
+}
+
+.green {
+  color: #64a77d;
+}
+
+.teal {
+  color: #519c9a;
+}
+
+/* Temperature Buttons */
+
+.temperature__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* General Buttons */
+
+button {
+  background: #5d967f;
+  color: white;
+  border: none;
+  padding: 13px 20px;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+  transition:
+    background-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+button:hover {
+  background: #3f755f;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 12px rgba(63, 117, 95, 0.2);
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+/* Sky Section */
+
+.sky__section select {
+  width: 100%;
+  padding: 14px;
+  border: 2px solid #dcebe3;
+  border-radius: 12px;
+  background: #f7fbf8;
+  color: #477565;
+  font-family: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* City Name Section */
+
+.city-name__section input {
+  width: 100%;
+  padding: 14px;
+  border: 2px solid #dcebe3;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 1rem;
+  color: #344b45;
+  margin-bottom: 15px;
+  transition: border 0.2s ease;
+}
+
+.city-name__reset-btn {
+  background: #df9460;
+}
+
+.city-name__reset-btn:hover {
+  background: #c77a49;
+}
+
+/* Sky + City */
+.sky__section select:focus,
+.city-name__section input:focus {
+  outline: 1px solid rgba(117, 173, 145, 0.3);
+  border-color: #75ad91;
+}
+
+/* Weather Garden */
+
+.garden__content {
+  min-height: 220px;
+  border-radius: 18px;
+  padding: 30px 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 25px;
+  overflow: hidden;
+  transition: background 0.5s ease;
+}
+
+#sky {
+  font-size: 2.5rem;
+  letter-spacing: 8px;
+  animation: float 3s ease-in-out infinite;
+}
+
+#landscape {
+  font-size: 2.5rem;
+  letter-spacing: 5px;
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Weather Garden Backgrounds */
+
+.garden__content.sunny {
+  background: linear-gradient(180deg, #a9dcf4, #fff0b3);
+}
+
+.garden__content.cloudy {
+  background: linear-gradient(180deg, #c7d6df, #e9edef);
+}
+
+.garden__content.rainy {
+  background: linear-gradient(180deg, #819eb5, #c5d5e0);
+}
+
+.garden__content.snowy {
+  background: linear-gradient(180deg, #c6e1ef, #f5fbff);
+}
+
+/* Body Temperature Backgrounds */
+
+.soft-coral {
+  background: #f9e8e4;
+}
+
+.soft-orange {
+  background: #fbf0e2;
+}
+
+.soft-yellow {
+  background: #faf5df;
+}
+
+.soft-mint {
+  background: #eaf4eb;
+}
+
+.soft-gray {
+  background: #e9f0f2;
+}
+
+/* Footer */
+
+.info__footer {
+  margin-top: auto;
+  text-align: center;
+  padding: 30px 10px;
+  color: #82958b;
+  font-size: 0.85rem;
+}
+
+/* Header + Footer */
+.header__header,
+section,
+.info__footer {
+  width: 100%;
+}
+
+/* Animations */
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* Responsive Design */
+
+@media (max-width: 600px) {
+  body {
+    padding: 15px 12px;
+  }
+
+  .header__header h1 {
+    font-size: 2rem;
+  }
+
+  section {
+    padding: 22px 18px;
+  }
+
+  .temperature__buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .temperature__buttons button {
+    width: 100%;
+  }
+
+  #tempValue {
+    font-size: 3rem;
+    min-width: 100px;
+  }
+
+  #sky,
+  #landscape {
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+  }
+}
