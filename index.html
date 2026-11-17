@@ -1,15 +1,93 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Weather Report</title>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles/index.css">
-    <script defer src="./src/index.js"></script>
-</head>
-<body>
-</body>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles/index.css" />
+    <script defer src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script defer type="module" src="./src/index.js"></script>
+  </head>
+  <body>
+    <section id="title-section">
+      <h1 id="weather-report-title">Weather Report</h1>
+      <h2 id="city">Seattle </h2>
+      <form id="city-input-field">
+        <input type="text" id="city-input" placeholder="Enter city here" name="city" required/>
+        <button>Submit</button>
+        <button type="button" id="resetBtn">Reset Form</button>
+      </form>
+      <div class="garden left-side">
+          <span>🌲</span>
+          <span>🌳</span>
+          <span>⛄</span>
+          <span>🍂</span>
+          <span>🌷</span>
+        </div>
+
+        <div class="garden right-side">
+          <span>🌼</span>
+          <span>🍄</span>
+          <span>🌲</span>
+          <span>🌳</span>
+          <span>🌻</span>
+        </div>
+      <section id="landscape">
+        <h3>Landscape Garden</h3>
+        <p id="landscape_text"></p>
+      </section>
+      <section id="weather-description">
+        <p id="weather-description-label">Weather Description: <br>Enter a city above</p>
+      <p id="weather_description_text"></p>
+    </section>
+    </section>
+    <section id="weather-info">
+      <img
+        id="location-picture"
+        alt="location image"
+        src="./ada-project-docs/assets/cloudyskies.png"
+      />
+    <div class="grid-overlay">
+    <section id="temperature">
+     <div class="temperature-header">
+        <h2>Temperature</h2>
+          <div class="unit-toggle">
+          <button type="button" id="celsius">°C</button>
+          <button type="button" id="fahrenheit">°F</button>
+          </div>
+      </div>
+      <p id="numeric-temp"></p>
+      <div class="temperature-controls">
+        <button type="button" id="decrease_temp">-</button>
+        <button type="button" id="increase_temp">+</button>
+      </div>
+    </section>
+    <section id="precipitation" class = "precipitation-card">
+      <h2>Precipitation</h2>
+        <p id="precipitation_text">No rain</p>
+      
+    </section>
+    <section id="wind-direction-and-Speed">
+      <p id="wind_direction_text">Wind Direction</p>
+      <p id="wind_speed_text">Wind Speed</p>
+    </section>
+    <section id = "sky">
+      <h2>Sky</h2>
+      <select id="sky-select">
+        <option value='sunny'>Sunny</option>
+        <option value='cloudy'>Cloudy</option>
+        <option value='rainy'>Rainy</option>
+        <option value='snowy'>Snowy</option>
+      </select>
+      <p id="sky-preview">☀️</p>
+      </div>
+      </div>
+    </section>
+  </body>
 </html>
