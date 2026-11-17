@@ -1,15 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather Report</title>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles/index.css">
-    <script defer src="./src/index.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weather Report</title>
+<link rel="stylesheet" href="styles/index.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script defer src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script defer src="src/index.js"></script>
 </head>
+
 <body>
+
+<header>
+	<h1>Weather Report</h1>
+	<p>What's the weather like today?</p>
+</header>
+
+<main>
+	<section id="city-section">
+		<h2 id="city-name">Seattle</h2>
+	</section>
+	
+	<section id="weather-container">
+		<div id="temperature-container">
+			<button id="decrease-temperature">&ndash;</button><span id="temperature"><span>62</span>&deg;<small>F</small></span><button id="increase-temperature">+</button>
+		</div>
+	</section>
+	<section id="current-weather-section">
+		<h3 id="weather-condition"></h3>
+		<p id="weather-message">Don't forget your sunscreen! ☀️</p>
+		<div id="sky"><img src="" alt="" id="weather-icon"></div>
+		<button id="get-weather-button">Get Current Weather</button>
+		<div id="landscape"></div>
+	</section>
+	
+	<section id="rename-section">
+		<h3>Override City</h3>
+		<input
+			type="text"
+			id="city-input"
+			placeholder="Enter city name">
+		<button id="select-button">Select</button>
+		<p id="error-message"></p>
+	</section>
+	<section id="sky-select-section">
+		<h3>Override Sky Type</h3>
+		<select id="sky-select">
+			<option value="clear">Sunny</option>
+			<option value="clouds">Cloudy</option>
+			<option value="rainy">Rainy</option>
+			<option value="snowy">Snowy</option>
+		</select>
+	</section>
+	<section id="reset-section">
+		<button id="reset-city-button">Reset</button>
+	</section>
+
+</main>
+<footer>
+	<p><em>Weather Report App by Simran Verma and Kage Edwards, Ada C26</em></p>
+</footer>
 </body>
 </html>
