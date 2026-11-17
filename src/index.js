@@ -6,7 +6,7 @@ let units = 'fahrenheit'
 // asyncronously fetch location latitude and longitude from the proxy server running on my machine
 const fetchData = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:5000/location', {
+    const response = await axios.get('https://ada-weather-report-proxy-server.onrender.com/location', {
       params: { q: current_city }
     });
 
@@ -23,7 +23,7 @@ const fetchData = async () => {
 // asyncronously fetch location latitude and longitude from the proxy server running on my machine
 const fetchWeatherData = async (lat, lon) => {
   try {
-    const response = await axios.get('http://127.0.0.1:5000/weather', {
+    const response = await axios.get('https://ada-weather-report-proxy-server.onrender.com/weather', {
       params: { lat: lat, lon: lon}
     });
 
@@ -72,11 +72,11 @@ form.addEventListener('submit', async function(event) {
   changeTextColor(Math.round(weatherData.main.temp - 273.15))
   if(weatherData.rain) {
     if(weatherData.rain['1h'] < 2.5) {
-      document.getElementById('precipitation_text').textContent = `Precipitation: Light Rain`
+      document.getElementById('precipitation_text').textContent = `Light Rain`
     } else if (weatherData.rain['1h'] < 7.5) {
-      document.getElementById('precipitation_text').textContent = `Precipitation: Rain`
+      document.getElementById('precipitation_text').textContent = `Rain`
     } else {
-      document.getElementById('precipitation_text').textContent = `Precipitation: Heavy Rain`
+      document.getElementById('precipitation_text').textContent = `Heavy Rain`
     }
   }
 });

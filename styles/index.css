@@ -15,19 +15,13 @@ img {
 }
 
 #title-section {
-    background-color:blanchedalmond;
-    text-align: center;
-    padding: 25px;
-}
-
-#title-section {
   background-color: #DCECF5;
   text-align: center;
   padding: 50px 25px 90px;
   position: relative;
   overflow: hidden;
 }
-
+/* garden and floating emojis  */
 .garden {
   position: absolute;
   bottom: 95px;
@@ -64,6 +58,7 @@ img {
   margin: 35px auto 0;
   text-align: center;
 }
+
 #landscape h3 {
   font-size: 18px;
   color: #426c3b;
@@ -75,9 +70,6 @@ img {
   line-height: 1.6;
   overflow-wrap: anywhere;
 }
-
-
-
 
 #city {
   font-size: 28px;
@@ -132,16 +124,21 @@ img {
 #temperature, #precipitation, #wind-direction-and-Speed, #sky {
   background-color: #edf5ff;
   border-radius: 20px;
-  padding: 30px;
-  width: 350px;
+  padding: 40px;
+  width: 600px;
   max-width: 90%;
-  box-sizing: border-box;
+  min-height: 300px;
   margin: 30px auto;
   text-align: center;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-.temperature-header, .precipiation-header h2{
+#precipitation,
+#sky {
+  padding-top: 90px;
+}
+
+.temperature-header {
   position: relative;
   display: flex;
   justify-content: center;
@@ -149,8 +146,11 @@ img {
   padding-top: 35px;
 }
 
-.temperature-header, .precipiation-header h2 {
-  font-size: 22px;
+#temperature h2,
+#precipitation h2,
+#sky h2 {
+  font-size: 28px;
+  font-weight: bold;
   margin: 0;
 }
 
@@ -162,12 +162,21 @@ img {
   gap: 5px;
 }
 
+
 #numeric-temp, #precipitation_text, #wind_speed_text, #wind_direction_text{
-  display: inline-block;
-  font-size: 40px;
-  padding: 12px 25px;
-  border-radius: 15px;
+  display: block;
+  font-size: 28px;
+  font-weight: normal;
+  padding: 12px 20px;
   margin: 20px 0;
+}
+
+#precipitation_text {
+  margin-top: 40px;
+}
+
+#numeric-temp {
+  font-size: 55px;
 }
 
 .temperature-controls {
@@ -185,8 +194,13 @@ img {
   padding: 8px 15px;
   border-radius: 10px;
   border: 1px solid #b8d4f0;
+  margin-top: 25px;
 }
 
+#sky-preview {
+  font-size: 40px;
+  margin-top: 25px;
+}
 
 #weather-info {
     display: grid;
@@ -194,7 +208,6 @@ img {
     width: 100%;
 }
 
-  /* Force both the image and the grid to stack in the exact same cell */
   #location-picture,
   .grid-overlay {
     grid-area: 1 / 1;
