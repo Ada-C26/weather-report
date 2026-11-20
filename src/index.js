@@ -1,97 +1,114 @@
-let temperature = 51;
-const increaseControl = document.getElementById("increase_control")
-const temperatureValue = document.getElementById("temperature_value")
-const decreaseControl = document.getElementById("decrease_control")
-const landscape = document.getElementById("emojis");
-const temperatureButton = document.getElementById("temperature_button");
-const cityInput = document.getElementById("city");
-const resetButton = document.getElementById("reset_button");
-const proxyURL = "http://127.0.0.1:5000";
-const weatherOptions = document.getElementById("weather_options");
-const subtitle = document.getElementById("subtitle");
+document.addEventListener("DOMContentLoaded", () => {
 
-function updateSubtitle(cityName) {
-    subtitle.textContent = `For the lovely city of ${cityName}`;
-}
+    let temperature = 51;
 
-function updateTemperatureColor() {
-    temperatureValue.textContent = temperature;
-    if (temperature >= 80) {
-        temperatureValue.style.color = "red";
-    } else if (temperature >= 70) {
-        temperatureValue.style.color = "orange";
-    } else if (temperature >= 60) {
-        temperatureValue.style.color = "yellow";
-    } else if (temperature >= 50) {
-        temperatureValue.style.color = "green";
-    } else {
-        temperatureValue.style.color = "teal";
-    }
-}
+    const increaseControl = document.getElementById("increase_control");
+    const temperatureValue = document.getElementById("temperature_value");
+    const decreaseControl = document.getElementById("decrease_control");
+    const landscape = document.getElementById("emojis");
+    const temperatureButton = document.getElementById("temperature_button");
+    const cityInput = document.getElementById("city");
+    const citySubtitle = document.getElementById("city_subtitle");
+    const resetButton = document.getElementById("reset_button");
+    const proxyURL = "https://weather-report-proxy-server-r1lr.onrender.com";
+    const weatherOptions = document.getElementById("weather_options");
+    const skyDisplay = document.getElementById("sky-display");
 
-function updateLandscape() {
-    temperatureValue.textContent = temperature;
-
-    if (temperature >= 80) {
-        landscape.textContent= "🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂";
-    } else if (temperature >= 70) {
-        landscape.textContent= "🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷";
-    } else if (temperature >= 60) {
-        landscape.textContent= "🌾🌾_🍃_🪨__🛤_🌾🌾🌾_🍃";
-    } else {
-        landscape.textContent= "🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲";
-    }
-}
-
-increaseControl.addEventListener("click",() => {
-    temperature += 1;
-    updateTemperatureColor ();
-    updateLandscape();
-});
-
-decreaseControl.addEventListener("click",() => {
-    temperature -= 1;
-    updateTemperatureColor ();
-    updateLandscape();
-});
-
-updateTemperatureColor();
-updateLandscape();
-
-temperatureButton.addEventListener("click", () => {
-    const cityName = cityInput.value.trim();
-
-    if (cityName === "") {
-        alert("Please enter a city name.");
-        return;
+    // Update city subtitle
+    function updateSubtitle() {
+        const cityName = cityInput.value;
+        citySubtitle.textContent = `For the lovely city of ${cityName}`;
     }
 
-    axios.get(`${proxyURL}/location`, {
-        params: {
-            q: cityName
+    // Update temperature color and landscape
+    function updateTemperatureDisplay() {
+        temperatureValue.textContent = temperature;
+
+        const temperatureRanges = [
+            {
+                min: 80,
+                color: "red",
+                landscape: "🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂"
+            },
+            {
+                min: 70,
+                color: "orange",
+                landscape: "🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷"
+            },
+            {
+                min: 60,
+                color: "yellow",
+                landscape: "🌾🌾_🍃_🪨__🛤_🌾🌾🌾_🍃"
+            },
+            {
+                min: 50,
+                color: "green",
+                landscape: "🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲"
+            },
+            {
+                min: -Infinity,
+                color: "teal",
+                landscape: "🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲"
+            }
+        ];
+
+        for (const range of temperatureRanges) {
+            if (temperature >= range.min) {
+                temperatureValue.style.color = range.color;
+                landscape.textContent = range.landscape;
+                break;
+            }
         }
-    })
-    .then((response) => {
-        const locations = response.data;
+    }
 
-        if (!Array.isArray(locations) || locations.length === 0) {
-            throw new Error("City not found.");
-        }
+    // Increase temperature
+    function increaseTemperature() {
+        temperature += 1;
+        updateTemperatureDisplay();
+    }
 
-        const latitude = locations[0].lat;
-        const longitude = locations[0].lon;
+    // Decrease temperature
+    function decreaseTemperature() {
+        temperature -= 1;
+        updateTemperatureDisplay();
+    }
 
+    // Get city coordinates
+    function getLocation(cityName) {
+        return axios.get(`${proxyURL}/location`, {
+            params: {
+                q: cityName
+            }
+        })
+        .then((response) => {
+            const locations = response.data;
+
+            if (!Array.isArray(locations) || locations.length === 0) {
+                throw new Error("City not found.");
+            }
+
+            const latitude = locations[0].lat;
+            const longitude = locations[0].lon;
+
+            return {
+                latitude: latitude,
+                longitude: longitude
+            };
+        });
+    }
+
+    // Get weather using coordinates
+    function getWeather(latitude, longitude) {
         return axios.get(`${proxyURL}/weather`, {
             params: {
                 lat: latitude,
                 lon: longitude
             }
         });
-    })
-    .then((response) => {
-        const weatherData = response.data;
-        console.log("Resposta de /weather:", weatherData);
+    }
 
+    // Update temperature from weather data
+    function updateWeatherTemperature(weatherData) {
         if (!weatherData.main || typeof weatherData.main.temp !== "number") {
             throw new Error(
                 weatherData.message || "Invalid weather data."
@@ -104,36 +121,66 @@ temperatureButton.addEventListener("click", () => {
             (kelvin - 273.15) * 9 / 5 + 32
         );
 
-        updateTemperatureColor();
-        updateLandscape();
-        updateSubtitle(cityName);
-    })
-    .catch((error) => {
-        console.error("Could not fetch weather data:", error);
-        alert("Could not get weather data.");
-    });
-});
+        updateTemperatureDisplay();
+    }
 
-const updateSky = () => {
-  const selectedWeather = weatherOptions.value;
-  const skyDisplay = document.querySelector("#sky-display");
+    // Handle realtime temperature button
+    function handleTemperatureClick() {
+        const cityName = cityInput.value.trim();
 
-  if (selectedWeather === "Sunny") {
-    skyDisplay.textContent = "☁️ ☁️ ☁️ ☀️ ☁️ ☁️";
-  } else if (selectedWeather === "Cloudy") {
-    skyDisplay.textContent = "☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️";
-  } else if (selectedWeather === "Rainy") {
-    skyDisplay.textContent = "🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧";
-  } else if (selectedWeather === "Snowy") {
-    skyDisplay.textContent = "🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨";
-  }
-};
+        if (cityName === "") {
+            alert("Please enter a city name.");
+            return;
+        }
 
+        getLocation(cityName)
+        .then((coordinates) => {
+            return getWeather(
+                coordinates.latitude,
+                coordinates.longitude
+            );
+        })
+        .then((response) => {
+            updateWeatherTemperature(response.data);
+        })
+        .catch((error) => {
+            console.error("Could not fetch weather data:", error);
+            alert("Could not get weather data.");
+        });
+    }
 
+    // Update sky
+    function updateSky() {
+        const selectedWeather = weatherOptions.value;
 
-weatherOptions.addEventListener("change", updateSky);
-updateSky();
+        if (selectedWeather === "Sunny") {
+            skyDisplay.textContent = "☁️ ☁️ ☁️ ☀️ ☁️ ☁️";
+        } else if (selectedWeather === "Cloudy") {
+            skyDisplay.textContent = "☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️";
+        } else if (selectedWeather === "Rainy") {
+            skyDisplay.textContent = "🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧";
+        } else if (selectedWeather === "Snowy") {
+            skyDisplay.textContent = "🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨";
+        }
+    }
 
-resetButton.addEventListener("click", () => {
-  cityInput.value = "Seattle";
+    // Reset city to Seattle
+    function resetCity() {
+        cityInput.value = "Seattle";
+        updateSubtitle();
+    }
+
+    // Event listeners
+    cityInput.addEventListener("input", updateSubtitle);
+    increaseControl.addEventListener("click", increaseTemperature);
+    decreaseControl.addEventListener("click", decreaseTemperature);
+    temperatureButton.addEventListener("click", handleTemperatureClick);
+    weatherOptions.addEventListener("change", updateSky);
+    resetButton.addEventListener("click", resetCity);
+
+    // Initial display
+    updateSubtitle();
+    updateTemperatureDisplay();
+    updateSky();
+
 });
