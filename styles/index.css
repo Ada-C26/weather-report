@@ -104,7 +104,8 @@ body {
 
 .garden__content {
   min-height: 200px;
-  max-width: fit-content;
+  /* max-width: fit-content; */
+  max-width: 45%;
   margin: auto;
   padding: 2rem;
 

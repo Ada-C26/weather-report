@@ -2,20 +2,28 @@
 
 const baseURL = 'https://ada-weather-report-proxy-server.onrender.com/';
 
-const TEMPER_COLOR = {
-  80: 'red',
-  70: 'orange',
-  60: 'yellow',
-  50: 'green',
-  49: 'teal',
-};
+// const TEMPER_COLOR = {
+//   80: 'red',
+//   70: 'orange',
+//   60: 'yellow',
+//   50: 'green',
+//   [-Infinity]: 'teal',
+// };
 
-const TEMPER_LANDSCAPE = {
-  80: `🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂`,
-  70: `🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷`,
-  60: `🌾🌾_🍃_🪨__🛤_🌾🌾🌾_🍃`,
-  59: `🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲`,
-};
+// const TEMPER_LANDSCAPE = {
+//   80: `🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂`,
+//   70: `🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷`,
+//   60: `🌾🌾_🍃_🪨__🛤_🌾🌾🌾_🍃`,
+//   [-Infinity]: `🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲`,
+// };
+
+const temperatureRanges = [
+  { min: 80, color: 'red', landscape: '🌵 🐍 🦂 🌵🌵 🐍 🏜 🦂' },
+  { min: 70, color: 'orange', landscape: '🌸🌿🌼 🌷🌻🌿 ☘️🌱 🌻🌷' },
+  { min: 60, color: 'salmon', landscape: '🌾🌾 🍃 🪨 🛤 🌾🌾🌾 🍃' },
+  { min: 50, color: 'green', landscape: '🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲' },
+  { min: -Infinity, color: 'blue', landscape: '⛄️ ⛄️ ⛄️' }, // Default for temperatures <= 49
+];
 
 const SKY = {
   Sunny: '☁️ ☁️ ☁️ ☀️ ☁️ ☁️',
@@ -28,8 +36,12 @@ const state = {
   defaultTemperature: 70,
   defaultSky: 'Sunny',
   defaultCityName: 'Seattle',
-  defaultLandscape: TEMPER_LANDSCAPE[70],
+  // defaultLandscape: TEMPER_LANDSCAPE[70],
+  defaultLandscape: temperatureRanges.find((range) => range.min <= 70)
+    .landscape,
+};
 
+const elements = {
   increaseTempControl: document.getElementById('increaseTempControl'),
   decreaseTempControl: document.getElementById('decreaseTempControl'),
   tempValue: document.getElementById('tempValue'),
@@ -43,66 +55,93 @@ const state = {
   landscape: document.getElementById('landscape'),
 };
 
-state.increaseTempControl.addEventListener('click', () => {
-  state.tempValue.textContent = parseInt(state.tempValue.textContent) + 1;
-  updateTempColor(state.tempValue.textContent);
-  updateLandscape(state.tempValue.textContent);
-});
-state.decreaseTempControl.addEventListener('click', () => {
-  state.tempValue.textContent = parseInt(state.tempValue.textContent) - 1;
-  updateTempColor(state.tempValue.textContent);
-  updateLandscape(state.tempValue.textContent);
-});
-state.cityNameInput.addEventListener('input', () => {
-  state.headerCityName.textContent = state.cityNameInput.value;
-});
-state.currentTempButton.addEventListener(
-  'click',
-  async () => await updateTemp(),
-);
+document.addEventListener('DOMContentLoaded', () => {
+  elements.increaseTempControl.addEventListener('click', () => {
+    changeTemperature(1);
+  });
 
-state.skySelect.addEventListener('change', () => {
-  const selectedValue = state.skySelect.value;
-  updateSky(selectedValue);
+  elements.decreaseTempControl.addEventListener('click', () => {
+    changeTemperature(-1);
+  });
+
+  elements.cityNameInput.addEventListener('input', () => {
+    elements.headerCityName.textContent = elements.cityNameInput.value;
+  });
+
+  elements.currentTempButton.addEventListener(
+    'click',
+    async () => await updateTemp(),
+  );
+
+  elements.skySelect.addEventListener('change', () => {
+    updateSky();
+  });
+
+  elements.cityNameReset.addEventListener('click', () => {
+    elements.cityNameInput.value = state.defaultCityName;
+    elements.headerCityName.textContent = state.defaultCityName;
+  });
 });
 
-state.cityNameReset.addEventListener('click', () => {
-  state.cityNameInput.value = state.defaultCityName;
-  state.headerCityName.textContent = state.defaultCityName;
-});
+const changeTemperature = (change) => {
+  elements.tempValue.textContent =
+    parseInt(elements.tempValue.textContent) + change;
 
-const updateTempColor = (temp) => {
-  if (temp >= 80) {
-    state.tempValue.style.color = TEMPER_COLOR[80];
-  } else if (temp >= 70) {
-    state.tempValue.style.color = TEMPER_COLOR[70];
-  } else if (temp >= 60) {
-    state.tempValue.style.color = TEMPER_COLOR[60];
-  } else if (temp >= 50) {
-    state.tempValue.style.color = TEMPER_COLOR[50];
-  } else {
-    state.tempValue.style.color = TEMPER_COLOR[49];
+  updateTempRange();
+  // updateTempColor();
+  // updateLandscape();
+};
+
+const updateTempRange = () => {
+  const temp = parseInt(elements.tempValue.textContent);
+  for (const range of temperatureRanges) {
+    if (temp >= range.min) {
+      elements.tempValue.style.color = range.color;
+      elements.landscape.textContent = range.landscape;
+      return;
+    }
   }
 };
 
-const updateLandscape = (temp) => {
-  if (temp >= 80) {
-    state.landscape.textContent = TEMPER_LANDSCAPE[80];
-  } else if (temp >= 70) {
-    state.landscape.textContent = TEMPER_LANDSCAPE[70];
-  } else if (temp >= 60) {
-    state.landscape.textContent = TEMPER_LANDSCAPE[60];
-  } else {
-    state.landscape.textContent = TEMPER_LANDSCAPE[59];
-  }
-};
+// const updateTempColor = () => {
+//   const temp = parseInt(state.tempValue.textContent);
 
-const updateSky = (sky) => {
-  state.sky.textContent = SKY[sky];
+//   const thresholds = Object.keys(TEMPER_COLOR)
+//     .map(Number)
+//     .sort((a, b) => b - a);
 
-  const skyBackground = sky.toLowerCase();
-  state.gardenContent.classList.remove('sunny', 'cloudy', 'rainy', 'snowy');
-  state.gardenContent.classList.add(skyBackground);
+//   for (const threshold of thresholds) {
+//     if (temp >= threshold) {
+//       state.tempValue.style.color = TEMPER_COLOR[threshold];
+//       break;
+//     }
+//   }
+// };
+
+// const updateLandscape = () => {
+//   const temp = parseInt(state.tempValue.textContent);
+
+//   const thresholds = Object.keys(TEMPER_LANDSCAPE)
+//     .map(Number)
+//     .sort((a, b) => b - a);
+
+//   for (const threshold of thresholds) {
+//     if (temp >= threshold) {
+//       state.landscape.textContent = TEMPER_LANDSCAPE[threshold];
+//       return;
+//     }
+//   }
+// };
+
+const updateSky = () => {
+  const selectedValue = elements.skySelect.value;
+  elements.sky.textContent = SKY[selectedValue];
+
+  const skyBackground = selectedValue.toLowerCase();
+
+  const skyClasses = Object.keys(SKY).map((k) => k.toLowerCase());
+  elements.gardenContent.classList.remove(...skyClasses);
+  elements.gardenContent.classList.add(skyBackground);
 };
 
 const getLatitudeAndLongitude = (query) => {
@@ -117,7 +156,9 @@ const getLatitudeAndLongitude = (query) => {
       return { latitude, longtitude };
     })
     .catch((error) => {
-      console.log(error);
+      console.log(
+        `Failed to get latitude and longitude for ${query}: ${error}`,
+      );
     });
 };
 
@@ -133,14 +174,22 @@ const getCurrentTemp = (latitude, longtitude) => {
       return response.data.main.temp;
     })
     .catch((error) => {
-      console.log(error);
+      console.log(
+        `Failed to get current temperature for ${latitude}, ${longtitude}: ${error}`,
+      );
     });
 };
 
 const kelvinToFahrenheit = (kelvin) => ((kelvin - 273.15) * 9) / 5 + 32;
 
 const updateTemp = () => {
-  const city = state.cityNameInput.value;
+  const city = elements.cityNameInput.value;
+
+  if (!city) {
+    console.log('City name is empty. Please enter a valid city name.');
+    alert('City name is empty. Please enter a valid city name.');
+    return Promise.reject('City name is empty');
+  }
 
   const cityLocation = getLatitudeAndLongitude(city);
 
@@ -150,22 +199,24 @@ const updateTemp = () => {
 
   return cityCurrentTemp.then((temp) => {
     const tempFahrenheit = kelvinToFahrenheit(temp);
-    state.tempValue.textContent = Math.round(tempFahrenheit);
-    updateTempColor(state.tempValue.textContent);
-    updateLandscape(state.tempValue.textContent);
+    elements.tempValue.textContent = Math.round(tempFahrenheit);
+    // updateTempColor();
+    // updateLandscape();
+    updateTempRange();
     return tempFahrenheit;
   });
 };
 
 const onload = () => {
-  state.tempValue.textContent = state.defaultTemperature;
-  updateTempColor(state.tempValue.textContent);
-  state.skySelect.value = state.defaultSky;
-  updateSky(state.defaultSky);
-  state.cityNameInput.value = state.defaultCityName;
-  state.headerCityName.textContent = state.defaultCityName;
-  state.landscape.textContent = state.defaultLandscape;
-  updateLandscape(state.tempValue.textContent);
+  elements.tempValue.textContent = state.defaultTemperature;
+  // updateTempColor();
+  elements.landscape.textContent = state.defaultLandscape;
+  // updateLandscape();
+  updateTempRange();
+  elements.skySelect.value = state.defaultSky;
+  updateSky();
+  elements.cityNameInput.value = state.defaultCityName;
+  elements.headerCityName.textContent = state.defaultCityName;
 };
 
 window.addEventListener('load', onload);
