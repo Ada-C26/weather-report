@@ -14,12 +14,12 @@ There must be at least four skies.
 
 Our solution uses the following sky options, which you may use if desired:
 
-| Option | Sky                           |
-| ------ | ----------------------------- |
-| Sunny  | `"☁️ ☁️ ☁️ ☀️ ☁️ ☁️"`         |
+| Option | Sky                            |
+| ------ | ------------------------------ |
+| Sunny  | `"☁️ ☁️ ☁️ ☀️ ☁️ ☁️"`          |
 | Cloudy | `"☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️"` |
-| Rainy  | `"🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧"`          |
-| Snowy  | `"🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨"`       |
+| Rainy  | `"🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧"`   |
+| Snowy  | `"🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨"` |
 
 ## Hints
 
